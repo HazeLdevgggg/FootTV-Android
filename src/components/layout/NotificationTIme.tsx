@@ -9,6 +9,7 @@ import MyImage from "../tags/MyImage";
 import Empty from "./Empty";
 import CloseIcon from "./Filters/CloseIcon";
 import ScreenHeader from "./ScreenHeader/ScreenHeaderNoIcon";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function NotificationTime({
     onValidate,
@@ -63,7 +64,7 @@ function NotificationTime({
         onValidate(Object.keys(DateNotificationToggleFilters).filter((id) => DateNotificationToggleFilters[id]));
     }
 
-
+    const insets = useSafeAreaInsets();
     const selectedCount = Object.keys(DateNotificationToggleFilters).filter((id) => DateNotificationToggleFilters[id]).length;
 
     return (
@@ -75,7 +76,7 @@ function NotificationTime({
                 handleFilterValidate()
             }}
         >
-            <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
+            <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode),paddingTop: insets.top }]}>
                 {/* Header avec gradient subtil */}
                 <View style={[styles.modalHeader, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
                     <ScreenHeader
@@ -189,7 +190,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     modalHeader: {
-        paddingTop: Platform.OS === 'ios' ? 20 : 10,
         paddingBottom: 10,
         borderBottomWidth: 1,
         borderBottomColor: 'rgba(0,0,0,0.05)',

@@ -132,7 +132,7 @@ function ArticleListCard(props: Article) {
 
               {/* Section contenu */}
               <View style={styles.textContainer}>
-                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center",flexWrap:"wrap" }}>
                   <View style={styles.modernTagsRow}>
                     {!!props.exclu && (
                       <View style={styles.modernExcluContainer}>

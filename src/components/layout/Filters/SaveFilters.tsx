@@ -3,13 +3,11 @@ import { StyleSheet, View, Text, TouchableOpacity, Modal, TextInput, Platform, S
 import { Ionicons } from "@expo/vector-icons";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { AppConfig } from "../../../AppConfig";
-import ScreenHeaderResetButton from "../ScreenHeader/ScreenHeaderResetButton";
-import ItemChannel from "../ItemChannel";
 import ScreenHeaderNoIcon from "../ScreenHeader/ScreenHeaderNoIcon";
-import { v4 as uuidv4 } from 'uuid';
 import { Alert } from "react-native";
 import Search from "../Search";
 import Toast from 'react-native-toast-message';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 type Category = {
     name: string;
     id: string;
@@ -36,7 +34,7 @@ function SaveFilters({
     const { darkMode, filters, setFilters, setEditID } = useContext(ThemeContext);
     const [categories, setCategories] = useState<Category[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
-
+    const insets = useSafeAreaInsets();
     console.log(type);
 
     const DateToStringUI = (date: string) => {
@@ -107,7 +105,7 @@ function SaveFilters({
             >
                 <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
                     <ScrollView contentContainerStyle={{ paddingBottom: 40, alignItems: "center" }}>
-                        <View style={{ alignItems: "center", justifyContent: "flex-start", width: "100%", paddingTop: 20 }}>
+                        <View style={{ alignItems: "center", justifyContent: "flex-start", width: "100%", paddingTop: insets.top }}>
                             <ScreenHeaderNoIcon name="Enregistrer ce filtre" OnBackButtonPress={() => {
                                 {
                                     setIsDropdownVisible(false);
@@ -252,7 +250,7 @@ function SaveFilters({
                                     );
                                 } else {
                                     type.name = searchQuery;
-                                    type.id = uuidv4();
+                                    type.id = searchQuery+"_"+Date.now();
                                     const newFilter = type;
                                     setFilters([...filters, newFilter]);
                                     setIsDropdownVisible(false);

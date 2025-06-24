@@ -44,6 +44,7 @@ function Article() {
   const [PageArticle, setPageArticle] = useState<Article[]>([]);
   const [PubPage, setPubPage] = useState<PubPage>();
 
+
   useEffect(() => {
     const getChannel = async () => {
       setLoading(true);
@@ -124,7 +125,7 @@ function Article() {
                 GetNextPage();
               }
             }}
-            scrollEventThrottle={400}
+            scrollEventThrottle={16}
           >
             {PubPage && PubPage.top.display !== 0 && (
               <View style={{ marginBottom: 10 }}>

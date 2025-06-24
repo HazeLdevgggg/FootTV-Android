@@ -60,7 +60,6 @@ function AppContainer() {
           />
         ),
       };
-      setOnBoarding(2);
     useEffect(() => {
         async function prepareApp() {
             try {

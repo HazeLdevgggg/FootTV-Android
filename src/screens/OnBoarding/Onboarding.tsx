@@ -34,9 +34,13 @@ const RenderItem = ({
   index: number;
   x: SharedValue<number>;
 }) => {
-  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = useWindowDimensions();
   const { darkMode } = useContext(ThemeContext);
 
+  // Calculer des tailles adaptatives
+  const isSmallScreen = SCREEN_WIDTH < 375;
+  const isMediumScreen = SCREEN_WIDTH >= 375 && SCREEN_WIDTH < 414;
+  const isLargeScreen = SCREEN_WIDTH >= 414;
   const imageAnimatedStyle = (HeightMult: number, WidthMult: number) => useAnimatedStyle(() => {
     const opacityAnimation = interpolate(
       x.value,
@@ -56,19 +60,20 @@ const RenderItem = ({
         index * SCREEN_WIDTH,
         (index + 1) * SCREEN_WIDTH,
       ],
-      [100, 0, 100],
+      [50, 0, 50],
       Extrapolate.CLAMP
     );
 
+    const adjustedWidthMult = isSmallScreen ? WidthMult * 0.95 : isMediumScreen ? WidthMult * 1.0 : WidthMult * 1.05;
+    const adjustedHeightMult = isSmallScreen ? HeightMult * 0.95 : isMediumScreen ? HeightMult * 1.0 : HeightMult * 1.05;
+
     return {
-      width: SCREEN_WIDTH * WidthMult,
-      height: SCREEN_WIDTH * HeightMult,
+      width: SCREEN_WIDTH * adjustedWidthMult,
+      height: SCREEN_HEIGHT * adjustedHeightMult,
       opacity: opacityAnimation,
       transform: [{ translateY: translateYAnimation }],
     };
   });
-
-
   const textAnimatedStyle = useAnimatedStyle(() => {
     const opacityAnimation = interpolate(
       x.value,
@@ -88,7 +93,7 @@ const RenderItem = ({
         index * SCREEN_WIDTH,
         (index + 1) * SCREEN_WIDTH,
       ],
-      [100, 0, 100],
+      [30, 0, 30], // Réduit l'animation
       Extrapolate.CLAMP
     );
 
@@ -106,7 +111,7 @@ const RenderItem = ({
         index * SCREEN_WIDTH,
         (index + 1) * SCREEN_WIDTH,
       ],
-      [60, 0, 60],
+      [20, 0, 20], // Réduit l'animation
       Extrapolate.CLAMP
     );
 
@@ -123,7 +128,7 @@ const RenderItem = ({
         index * SCREEN_WIDTH,
         (index + 1) * SCREEN_WIDTH,
       ],
-      [40, 0, 40],
+      [15, 0, 15], // Réduit l'animation
       Extrapolate.CLAMP
     );
 
@@ -134,29 +139,46 @@ const RenderItem = ({
 
   return (
     <View style={[styles.itemContainer, { width: SCREEN_WIDTH }]}>
-      {item.image === require('../../assets/logoNoMadeIn.png') ? (
-        <Animated.Image resizeMode="contain" source={item.image} style={imageAnimatedStyle(0.9, 0.9)} />
-      ) : item.image === require('../../assets/OnBoarding/image2.png') ? (
-        <Animated.Image resizeMode="contain" source={item.image} style={imageAnimatedStyle(1.1, 1.1)} />
-      ) : (
-        <Animated.Image resizeMode="contain" source={item.image} style={imageAnimatedStyle(1.2, 1.2)} />
-      )}
+      <View style={[styles.imageContainer,{ marginTop: SCREEN_HEIGHT * 0.1 }]}>
+        <Animated.Image
+          resizeMode="contain"
+          source={item.image}
+          style={
+            [item.image === require('../../assets/logoNoMadeIn.png')
+              ? imageAnimatedStyle(0.45, 0.9)
+              : item.image === require('../../assets/OnBoarding/image2.png')
+                ? imageAnimatedStyle(0.5, 0.9)
+                : imageAnimatedStyle(0.6, 1)]
+          }
+        />
+      </View>
 
       <Animated.View style={[styles.textContainer, textAnimatedStyle]}>
-        {/* Titre avec effet de gradient */}
+        {/* Titre */}
         <Animated.View style={[styles.titleContainer, titleAnimatedStyle]}>
-          <Text style={[styles.itemTitle, { color: AppConfig.MainTextColor(darkMode) }]}>{item.title}</Text>
+          <Text style={[
+            styles.itemTitle,
+            {
+              color: AppConfig.MainTextColor(darkMode),
+              fontSize: isSmallScreen ? 28 : isMediumScreen ? 32 : 36
+            }
+          ]}>
+            {item.title}
+          </Text>
           <View style={styles.titleUnderline} />
         </Animated.View>
 
-        {/* Sous-titre avec effet de fade */}
+        {/* Sous-titre */}
         <Animated.View style={[styles.subtitleContainer, subtitleAnimatedStyle]}>
-          <View style={styles.textBackground}>
-            <Text style={styles.itemText}>{item.text}</Text>
+          <View style={[styles.textBackground, { backgroundColor: AppConfig.BackGroundButton(darkMode) }]}>
+            <Text style={[
+              styles.itemText,
+              { fontSize: isSmallScreen ? 15 : isMediumScreen ? 16 : 17 }
+            ]}>
+              {item.text}
+            </Text>
           </View>
         </Animated.View>
-
-
       </Animated.View>
     </View>
   );
@@ -199,6 +221,9 @@ export default function Onboarding() {
         bounces={false}
         pagingEnabled
         onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={{
+          viewAreaCoveragePercentThreshold: 50,
+        }}
       />
 
       <View style={styles.footerContainer}>
@@ -220,19 +245,28 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    paddingVertical: 20,
+  },
+  imageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    maxHeight: '50%',
   },
   textContainer: {
     alignItems: 'center',
     width: '100%',
     paddingHorizontal: 20,
+    flex: 1,
+    justifyContent: 'center',
+    maxHeight: '45%',
   },
   titleContainer: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 20,
   },
   itemTitle: {
-    fontSize: 36,
     fontWeight: '900',
     textAlign: 'center',
     letterSpacing: -1.2,
@@ -240,51 +274,47 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(255, 255, 255, 0.8)',
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
-    // Simulation d'un gradient text (car React Native ne supporte pas directement)
-    // On utilisera une couleur de base et des effets de shadow
   },
   titleUnderline: {
     height: 3,
-    width: 60,
+    width: 50,
     backgroundColor: '#3b82f6',
-    marginTop: 15,
+    marginTop: 12,
     borderRadius: 2,
     shadowColor: '#3b82f6',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2,
     },
-    shadowOpacity: 0.6,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+    elevation: 3,
   },
   subtitleContainer: {
     width: '100%',
     alignItems: 'center',
   },
   textBackground: {
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 12,
-    elevation: 6,
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
   },
   itemText: {
     color: '#e2e8f0',
     textAlign: 'center',
-    lineHeight: 26,
-    fontSize: 17,
+    lineHeight: 24,
     fontWeight: '500',
-    letterSpacing: 0.5,
+    letterSpacing: 0.3,
     opacity: 0.95,
     fontFamily: 'System',
   },
@@ -293,5 +323,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     margin: 20,
+    paddingHorizontal: 10,
   },
 });

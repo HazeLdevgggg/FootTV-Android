@@ -11,7 +11,7 @@ import { Banner } from '../../hooks/Pub';
 import { ThemeContext } from "../../context/ThemeContext";
 import { useContext } from 'react';
 import { AppConfig } from '../../AppConfig';
-import {ArticleDetail} from '../../utils/ArticleDetailType';
+import { ArticleDetail } from '../../utils/ArticleDetailType';
 
 export default function InfoItem(props: ArticleDetail) {
     const { darkMode } = useContext(ThemeContext);
@@ -45,12 +45,12 @@ export default function InfoItem(props: ArticleDetail) {
     const onMessage = (event: { nativeEvent: { data: any; }; }) => {
         const newHeight = Number(event.nativeEvent.data);
         if (newHeight) {
-          setWebViewHeight(newHeight);
+            setWebViewHeight(newHeight);
         }
-      };
-    
+    };
+
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false} contentContainerStyle={[styles.contentContainer,{backgroundColor: AppConfig.BackgroundColor(darkMode)}]}>
+        <>
             <View style={styles.imageContainer}>
                 <MyImage
                     source={props.photo} // Remplace avec l'URL réelle de l'image
@@ -103,30 +103,30 @@ export default function InfoItem(props: ArticleDetail) {
                 {props.pub_article_bottom!=='' &&(
                     <Banner unitId={props.pub_article_bottom} darkMode={darkMode}/>
                 )}    
-            </View>                
-        </ScrollView>
+            </View>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
+        flex: 1,
     },
     contentContainer: {
         paddingBottom: 1, // Ajoute une marge en bas pour éviter que le bas de l'article soit coupé
     },
-    contenu : {
-        padding:15,
-        marginBottom:10,
+    contenu: {
+        padding: 15,
+        marginBottom: 10,
     },
     header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     category: {
         fontSize: 14,
-        color:'#4096ee',
+        color: '#4096ee',
         textTransform: 'uppercase'
     },
     imageContainer: {
@@ -143,12 +143,12 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         backgroundColor: 'rgba(0, 0, 0, 0.1)', // Fond noir semi-transparent
-        height:55
+        height: 55
     },
     content: {
-      fontSize: 16,
-      lineHeight: 24,
-      marginBottom: 8,
+        fontSize: 16,
+        lineHeight: 24,
+        marginBottom: 8,
     },
     videoContainer: {
         marginTop: 20,
@@ -159,12 +159,12 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     rowtitre: {
-        marginLeft:15,
-        marginTop:10
+        marginLeft: 15,
+        marginTop: 10
     },
     titre: {
         fontSize: 20,
-        marginBottom:10
+        marginBottom: 10
     },
     overlayContainerUne: {
         position: 'absolute',
@@ -178,4 +178,4 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10,
     },
-  });
+});

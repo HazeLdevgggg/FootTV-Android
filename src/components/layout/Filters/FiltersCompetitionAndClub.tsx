@@ -20,6 +20,7 @@ import type { Competitions } from "../../../utils/CompetitionsType";
 import type { Club } from "../../../utils/ClubType";
 import { useTypedNavigation } from "../../../navigation/navigation";
 import MyImage from "../../tags/MyImage";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Platform } from 'react-native';
 import ScreenHeaderResetButton from "../ScreenHeader/ScreenHeaderResetButton";
 import Loading from "../Loading"; ``
@@ -51,6 +52,7 @@ function FiltersCompetitionAndClub({ onFilterChange, ClubID, CompetitionID }: Fi
     const [showClubModal, setShowClubModal] = useState(false);
     const [clubs, setClubs] = useState<Club[]>([]);
     const [isClubLoading, setIsClubLoading] = useState(false);
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         const getChannel = async () => {
@@ -183,7 +185,7 @@ function FiltersCompetitionAndClub({ onFilterChange, ClubID, CompetitionID }: Fi
                 presentationStyle={Platform.OS === 'ios' ? "pageSheet" : "formSheet"}
                 onRequestClose={() => setShowModal(false)}
             >
-                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
+                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode),paddingTop : insets.top }]}>
                     <ScreenHeaderResetButton name="Sélectionner une compétition" OnBackButtonPress={() => setShowModal(false)} OnResetButtonPress={handleReset} />
                     {isLoading ? (
                         <Loading />
@@ -222,7 +224,7 @@ function FiltersCompetitionAndClub({ onFilterChange, ClubID, CompetitionID }: Fi
                 presentationStyle="pageSheet"
                 onRequestClose={() => setShowClubModal(false)}
             >
-                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
+                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode),paddingTop : insets.top }]}>
                     <ScreenHeaderResetButton name="Sélectionner un club" OnBackButtonPress={() => setShowClubModal(false)} OnResetButtonPress={handleClubReset} />
                     {isClubLoading ? (
                         <Loading />
@@ -316,7 +318,6 @@ const styles = StyleSheet.create({
     },
     // Styles pour la modal
     modalContainer: {
-        paddingTop: Platform.OS === "ios" ? 20 : 10,
         flex: 1,
     },
     scrollContent: {

@@ -26,6 +26,7 @@ import Search from "../Search";
 import CloseIcon from "./CloseIcon";
 import { routes } from "../../../routes/routes";
 import ScreenHeaderResetButton from "../ScreenHeader/ScreenHeaderResetButton";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type ChannelFiltersProps = {
     onFilterChange: (id: string, name: string) => void;
@@ -38,8 +39,8 @@ function ChannelFilters({ onFilterChange, Value }: ChannelFiltersProps) {
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const { darkMode } = useContext(ThemeContext);
-    const [Name, setName] = useState<string>("");
     const [showModal, setShowModal] = useState<boolean>(false);
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         const getChannel = async () => {
@@ -131,7 +132,7 @@ function ChannelFilters({ onFilterChange, Value }: ChannelFiltersProps) {
                 presentationStyle="pageSheet"
                 onRequestClose={() => setShowModal(false)}
             >
-                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
+                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode),paddingTop: insets.top }]}>
                     <ScreenHeaderResetButton
                         name="Sélectionner une chaîne"
                         OnBackButtonPress={() => setShowModal(false)}
@@ -220,7 +221,6 @@ const styles = StyleSheet.create({
     },
     // Styles pour la modal
     modalContainer: {
-        paddingTop: Platform.OS === "ios" ? 20 : 10,
         flex: 1,
     },
     modalHeader: {

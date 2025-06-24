@@ -197,7 +197,7 @@ function Home() {
             GetNextPage();
           }
         }}
-        scrollEventThrottle={400}
+        scrollEventThrottle={16}
       >
         <View style={styles.vertical}>
           <WeekdayFilter onFilterChange={(NewselectedDays) => {

@@ -11,6 +11,7 @@ import Search from "../Search";
 import { levenshteinDistance } from "../../../functions/Levenshtein";
 import FiltersType from "../../../utils/FIltersType";
 import SectionDivider from "../../home/SectionDivider";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function LoadFilters({
     onFilterChange,
@@ -22,7 +23,7 @@ function LoadFilters({
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [selectedFilter, setSelectedFilter] = useState<FiltersType | null>(null);
     const { darkMode, filters, setFilters } = useContext(ThemeContext);
-
+    const insets = useSafeAreaInsets();
 
     const [localFilters, setLocalFilters] = useState<FiltersType[]>(filters);
     const handleFilterSelect = (category: FiltersType) => {
@@ -208,7 +209,7 @@ function LoadFilters({
                 onRequestClose={() => setIsDropdownVisible(false)}
             >
                 <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode), justifyContent: "flex-start", alignItems: "center" }]}>
-                    <View style={{ alignItems: "center", justifyContent: "flex-start", width: "100%", paddingTop: 20 }}>
+                    <View style={{ alignItems: "center", justifyContent: "flex-start", width: "100%", paddingTop: insets.top }}>
                         <ScreenHeaderResetButton name="Sélectionner une filtre" OnBackButtonPress={() => setIsDropdownVisible(false)} OnResetButtonPress={handleClearFilter} />
                     </View>
                     <ScrollView

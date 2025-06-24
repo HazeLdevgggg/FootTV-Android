@@ -26,6 +26,7 @@ import { useState } from "react";
 import { routes } from "../../routes/routes";
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 import NotificationTime from "../layout/NotificationTIme";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 type Props = {
   item: ItemList;
   isVisible: boolean;
@@ -85,6 +86,7 @@ useEffect(() => {
   };
 
 
+  const insets = useSafeAreaInsets();
 
   const MatchEnCours = () => {
     if (item.type === 'emission') {
@@ -138,7 +140,7 @@ useEffect(() => {
       onRequestClose={onClose}
       statusBarTranslucent
     >
-      <View style={[styles.container, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
+      <View style={[styles.container, { backgroundColor: AppConfig.BackgroundColor(darkMode), paddingTop: insets.top }]}>
 
         <ScreenHeaderNoIcon
           name="Détails du Match"
@@ -327,7 +329,6 @@ useEffect(() => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Platform.OS === 'ios' ? 20 : 0,
     flex: 1,
   },
   modernLiveContainer: {

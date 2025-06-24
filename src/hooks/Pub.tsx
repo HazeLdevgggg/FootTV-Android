@@ -168,17 +168,6 @@ const styles = StyleSheet.create({
         height: 120,
         justifyContent: "center",
     },
-    adContainerBottom: {
-        position: "absolute",
-        bottom: 0,
-        width: "100%",
-        height: 80,
-        paddingTop: 5,
-        backgroundColor: "#efefef",
-        justifyContent: "center",
-        alignItems: "center",
-        paddingBottom: Platform.OS === "ios" ? 20 : 0,
-    },
     vertical2: {
         flexDirection: "column",
         alignItems: "center",

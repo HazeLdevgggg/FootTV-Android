@@ -9,6 +9,7 @@ import { Favoris } from "../../../utils/FavorisType";
 import MyImage from "../../tags/MyImage";
 import Empty from "../Empty";
 import CloseIcon from "./CloseIcon";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function LoadFavoris({
     Value,
@@ -25,6 +26,7 @@ function LoadFavoris({
     const [selectedFilter, setSelectedFilter] = useState<boolean>(false);
     const { darkMode, favoris } = useContext(ThemeContext);
     var ToggleFilters: { [id: string]: boolean; } = {};
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         setSelectedFilter(Value.length > 0);
@@ -101,7 +103,7 @@ function LoadFavoris({
                 animationType="slide"
                 onRequestClose={() => setIsDropdownVisible(false)}
             >
-                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
+                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode),paddingTop : insets.top }]}>
                     {/* Header avec gradient subtil */}
                     <View style={[styles.modalHeader, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
                         <ScreenHeaderResetButton
@@ -272,7 +274,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     modalHeader: {
-        paddingTop: Platform.OS === 'ios' ? 20 : 10,
         paddingBottom: 10,
         borderBottomWidth: 1,
         borderBottomColor: 'rgba(0,0,0,0.05)',

@@ -21,6 +21,7 @@ import type { Club } from "../../../utils/ClubType";
 import { useTypedNavigation } from "../../../navigation/navigation";
 import MyImage from "../../tags/MyImage";
 import { Platform } from 'react-native';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ScreenHeaderNoIcon from "../ScreenHeader/ScreenHeaderNoIcon";
 import Loading from "../Loading";
 import ListItem from "./ListItem";
@@ -48,6 +49,7 @@ function FiltersCompetitionAndClubNoButton({ onFilterChange }: FiltersCompetitio
     const [clubs, setClubs] = useState<Club[]>([]);
     const [isClubLoading, setIsClubLoading] = useState(false);
     const [selectedCompetitionId, setSelectedCompetitionId] = useState("");
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         const getChannel = async () => {
@@ -144,7 +146,7 @@ function FiltersCompetitionAndClubNoButton({ onFilterChange }: FiltersCompetitio
                 presentationStyle={Platform.OS === 'ios' ? "pageSheet" : "formSheet"}
                 onRequestClose={() => setShowModal(false)}
             >
-                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
+                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode),paddingTop : insets.top }]}>
                     <ScreenHeaderNoIcon name="Sélectionner une compétition" OnBackButtonPress={() => setShowModal(false)} />
                     {isLoading ? (
                         <Loading />
@@ -178,7 +180,7 @@ function FiltersCompetitionAndClubNoButton({ onFilterChange }: FiltersCompetitio
                 presentationStyle="pageSheet"
                 onRequestClose={() => setShowClubModal(false)}
             >
-                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
+                <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode),paddingTop : insets.top }]}>
                     <ScreenHeaderNoIcon name="Sélectionner un club" OnBackButtonPress={() => setShowClubModal(false)} />
                     {isClubLoading ? (
                         <Loading />
@@ -234,7 +236,6 @@ const styles = StyleSheet.create({
     },
     // Styles pour la modal
     modalContainer: {
-        paddingTop: Platform.OS === "ios" ? 20 : 10,
         flex: 1,
     },
     scrollContent: {
