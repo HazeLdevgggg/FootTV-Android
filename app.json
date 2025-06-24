@@ -1,37 +1,61 @@
 {
   "expo": {
-    "name": "foot-tv",
-    "slug": "foot-tv",
+    "jsEngine": "hermes",
+    "name": "Foot TV",
+    "slug": "foottv",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "scheme": "foottv",
+    "icon": "./src/assets/app.png",
+    "splash": {
+      "image": "./src/assets/logo.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#0D1117"
+    },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.satya164.reactnavigationtemplate"
+      "bundleIdentifier": "com.madein.foot.tv",
+      "entitlements": {
+        "aps-environment": "production"
+      },
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "remote-notification"
+        ]
+      },
+      "googleServicesFile": "./src/assets/GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./src/assets/app.png",
+        "backgroundColor": "#0D1117"
       },
-      "package": "com.satya164.reactnavigationtemplate"
+      "package": "com.madein.foot.tv",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./src/assets/app.png"
     },
     "plugins": [
-      "expo-asset",
+      "@react-native-firebase/app",
+      "@react-native-firebase/messaging",
       [
-        "expo-splash-screen",
+        "expo-build-properties",
         {
-          "backgroundColor": "#ffffff",
-          "image": "./assets/splash-icon.png"
+          "ios": {
+            "useFrameworks": "static"
+          }
         }
       ],
-      "react-native-edge-to-edge"
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-2464230562981596~3151854479",
+          "iosAppId": "ca-app-pub-2464230562981596~9871637074"
+        }
+      ]
     ]
   }
 }

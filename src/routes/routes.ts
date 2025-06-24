@@ -1,0 +1,15 @@
+export const routes: { [name: string]: string } = {
+    Home: "index.php",
+    Info: "infos/chrono.php",
+    Article: "infos/index.php",
+    Search: "search.php",
+    SearchDate: "search-date.php",
+    LegalMention: "init/mentions-legales.php",
+    ProfileUpdate: "profil/update.php",
+    Profile: "profil/index.php",
+    Competitions: "ligues.php",
+    Club: "equipes.php",
+    ChannelProgram: "programmes-date.php",
+    Channel: "chaines.php",
+    Description: "emission.php",
+};

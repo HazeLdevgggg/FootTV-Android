@@ -1,0 +1,1116 @@
+{
+    "project_info": {
+      "project_number": "852417564860",
+      "firebase_url": "https://application-mobile-made-in.firebaseio.com",
+      "project_id": "application-mobile-made-in",
+      "storage_bucket": "application-mobile-made-in.firebasestorage.app"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:4f03b780110fd82a",
+          "android_client_info": {
+            "package_name": "com.madein.foot.angers"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~6329341617"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:055ce2a18c0989de",
+          "android_client_info": {
+            "package_name": "com.madein.foot.barcelone"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~9970527430"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:0ee65eaf2e528d6d",
+          "android_client_info": {
+            "package_name": "com.madein.foot.caen"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~2805906418"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:44bf592a45956015",
+          "android_client_info": {
+            "package_name": "com.madein.foot.eag"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~9910370812"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:9f51b578b853e35b",
+          "android_client_info": {
+            "package_name": "com.madein.foot.lorient"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~6538102016"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:b7a27fcebfc7c03d",
+          "android_client_info": {
+            "package_name": "com.madein.foot.madrid"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~8475319222"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:713aec7a44ac640e",
+          "android_client_info": {
+            "package_name": "com.madein.foot.metz"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~7875234418"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:6563b9f3e4476b6f",
+          "android_client_info": {
+            "package_name": "com.madein.foot.monaco"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~4993129978"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:5ea2d1fa0ee88301",
+          "android_client_info": {
+            "package_name": "com.madein.foot.nantes"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~2838935466"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:c19ef5855895ac45",
+          "android_client_info": {
+            "package_name": "com.madein.foot.nimes"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~6098195292"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:302351581f917602",
+          "android_client_info": {
+            "package_name": "com.madein.foot.ogcn"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~7596032813"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:df76d86b42fabfe9",
+          "android_client_info": {
+            "package_name": "com.madein.foot.rclens"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~3724236416"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:e58f63c3d0ac9958",
+          "android_client_info": {
+            "package_name": "com.madein.foot.rcsa"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~2597146017"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:ae46a9e9497fd879",
+          "android_client_info": {
+            "package_name": "com.madein.foot.reims"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~8933165219"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:10ecfaab751e0e22",
+          "android_client_info": {
+            "package_name": "com.madein.foot.rennes"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~1270297617"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:21be5fb8215cbfa5",
+          "android_client_info": {
+            "package_name": "com.madein.foot.tfc"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~5700497213"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:5900112ba3469904",
+          "android_client_info": {
+            "package_name": "com.madein.foot.turin"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:af28d52aa8aaf7469d00b9",
+          "android_client_info": {
+            "package_name": "com.madein.foot.tv"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:9141bc82ee0ecc499d00b9",
+          "android_client_info": {
+            "package_name": "com.madein.programme.tv.foot"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~8410165841"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:fe917b75cf4fd0fa",
+          "android_client_info": {
+            "package_name": "com.madein.rss.arsenal"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~4471616726"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:281de9fd01a79067",
+          "android_client_info": {
+            "package_name": "com.madein.test"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:2baa7531604fa91d9d00b9",
+          "android_client_info": {
+            "package_name": "com.madeinasse.android"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~4140988017"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:390767bacf38c7a3",
+          "android_client_info": {
+            "package_name": "com.madeinfoot.android"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~3222658014"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:ec92d6befd9bb3289d00b9",
+          "android_client_info": {
+            "package_name": "com.madeinfootlive.android"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~2328228412"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:c297d1ab461a42cf",
+          "android_client_info": {
+            "package_name": "com.madeingirondins.android"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~8710788412"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:6654c26a99db43b6",
+          "android_client_info": {
+            "package_name": "com.madeinlosc.android"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~6954853612"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:35c34b71f9540ba5",
+          "android_client_info": {
+            "package_name": "com.madeinmhsc.android"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~9768719217"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:48eca262bf76705d9d00b9",
+          "android_client_info": {
+            "package_name": "com.madeinol.android"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:7b317ca5112d9251",
+          "android_client_info": {
+            "package_name": "com.madeinom.android"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        },
+        "admob_app_id": "ca-app-pub-9330152050131267~8989990011"
+      },
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:852417564860:android:e60ee8a4c0e3a9939d00b9",
+          "android_client_info": {
+            "package_name": "com.madeinpsg.android"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "852417564860-plbb84r6nhrc35bnt6icc9ij2nq8obcc.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDUwhnJHf19dAfCKzobXg9luyXLn6BR_Fc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "113662084600145858232",
+                "client_type": 3
+              },
+              {
+                "client_id": "852417564860-0n0m7tq737pmiicp0u6v6jgsmdmdrlp7.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.madein.foot.rcsa"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
