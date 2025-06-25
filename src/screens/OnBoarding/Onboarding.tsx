@@ -24,6 +24,7 @@ import { Pagination } from '../../components/OnBoarding/Pagination';
 import { theme } from '../../constants/theme';
 import { data, type Data } from '../../data/screens';
 import { AppConfig } from '../../AppConfig';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const RenderItem = ({
   item,
@@ -204,9 +205,10 @@ export default function Onboarding() {
       x.value = event.contentOffset.x;
     },
   });
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingBottom: insets.top  }]}>
       <Animated.FlatList
         ref={flatListRef as any}
         data={data}

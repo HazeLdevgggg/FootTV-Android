@@ -128,7 +128,7 @@ const AllScreens = () => {
           }}
         />
         <Tab.Screen
-          name="FootTV & Moi"
+          name="Mon FootTV"
           component={DiscoverStack}
           options={{
             tabBarIcon: ({ color, size, focused }) => (

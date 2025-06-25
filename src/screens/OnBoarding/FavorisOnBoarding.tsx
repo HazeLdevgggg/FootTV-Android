@@ -11,6 +11,7 @@ import { Alert } from "react-native";
 import ScreenHeader from "../../components/layout/ScreenHeader/ScreenHeader";
 import Empty from "../../components/layout/Empty";
 import { Platform } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type FavorisProps = {
     id: string,
@@ -80,41 +81,44 @@ function FavorisOnBoarding() {
             );
         }
     };
+    const insets = useSafeAreaInsets();
 
     return (
-        <View style={[styles.container, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.content}>
-                    <SectionDivider icon="apps-outline" label="Liste des favoris" />
-                    <View style={styles.categoriesContainer}>
-                        {renderCategoryGrid()}
+        <View style={{ flex: 1, backgroundColor: AppConfig.BackgroundColor(darkMode) }}>
+            <View style={[styles.container, { backgroundColor: AppConfig.BackgroundColor(darkMode), marginBottom: insets.top }]}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={styles.content}>
+                        <SectionDivider icon="apps-outline" label="Liste des favoris" />
+                        <View style={styles.categoriesContainer}>
+                            {renderCategoryGrid()}
+                        </View>
+                        <SectionDivider icon="add-outline" label="Ajouter des favoris" />
+                        <FiltersCompetitionAndClubNoButton onFilterChange={(ClubId: string, Clublogo: string, CLubName: string) => {
+                            if (favoris.find(cat => cat.id === ClubId)) {
+                                Alert.alert("Déjà dans les favoris");
+                                return;
+                            }
+                            const newCategory = {
+                                id: ClubId,
+                                logo: Clublogo,
+                                clubId: ClubId,
+                                clubName: CLubName,
+                            };
+                            const updated = [...favoris, newCategory];
+                            setFavoris(updated);
+                            console.log("Favoris added:", newCategory);
+                        }} />
                     </View>
-                    <SectionDivider icon="add-outline" label="Ajouter des favoris" />
-                    <FiltersCompetitionAndClubNoButton onFilterChange={(ClubId: string, Clublogo: string, CLubName: string) => {
-                        if (favoris.find(cat => cat.id === ClubId)) {
-                            Alert.alert("Déjà dans les favoris");
-                            return;
-                        }
-                        const newCategory = {
-                            id: ClubId,
-                            logo: Clublogo,
-                            clubId: ClubId,
-                            clubName: CLubName,
-                        };
-                        const updated = [...favoris, newCategory];
-                        setFavoris(updated);
-                        console.log("Favoris added:", newCategory);
-                    }} />
+                </ScrollView>
+                <View style={[styles.actionSection, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
+                    <TouchableOpacity
+                        style={styles.actionButton}
+                        onPress={() => setOnBoarding(0)}
+                    >
+                        <Ionicons name="checkmark-circle-outline" size={20} color="#ffffff" />
+                        <Text style={styles.actionButtonText}>Valider</Text>
+                    </TouchableOpacity>
                 </View>
-            </ScrollView>
-            <View style={[styles.actionSection, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
-                <TouchableOpacity
-                    style={styles.actionButton}
-                    onPress={() => setOnBoarding(0)}
-                >
-                    <Ionicons name="checkmark-circle-outline" size={20} color="#ffffff" />
-                    <Text style={styles.actionButtonText}>Valider</Text>
-                </TouchableOpacity>
             </View>
         </View>
     );

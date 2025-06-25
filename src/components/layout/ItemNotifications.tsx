@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -25,6 +25,41 @@ function formatReminderLabel(key: string, value: string) {
   }
 }
 
+function calculateTimeRemaining(dateStr: string, timeStr: string) {
+  // Convertir la date format "09/12/2006" et l'heure format "23h45"
+  const [day, month, year] = dateStr.split('/').map(Number);
+  
+  // Parser l'heure au format "23h45"
+  const timeMatch = timeStr.match(/(\d{1,2})h(\d{2})/);
+  if (!timeMatch) {
+    return { expired: true, text: "Format invalide" };
+  }
+  
+  const hours = parseInt(timeMatch[1], 10);
+  const minutes = parseInt(timeMatch[2], 10);
+  
+  const matchDate = new Date(year, month - 1, day, hours, minutes);
+  const now = new Date();
+  
+  const timeDiff = matchDate.getTime() - now.getTime();
+  
+  if (timeDiff <= 0) {
+    return { expired: true, text: "Match commencé" };
+  }
+  
+  const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  const hoursRemaining = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutesRemaining = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+  
+  if (days > 0) {
+    return { expired: false, text: `Dans ${days}j ${hoursRemaining}h` };
+  } else if (hoursRemaining > 0) {
+    return { expired: false, text: `Dans ${hoursRemaining}h ${minutesRemaining}min` };
+  } else {
+    return { expired: false, text: `Dans ${minutesRemaining}min` };
+  }
+}
+
 type Props = {
   item: NotificationsType;
   OnPress: (id: string) => void;
@@ -32,6 +67,15 @@ type Props = {
 
 function ItemNotifications({ item, OnPress }: Props) {
   const { darkMode, profil_id } = useContext(ThemeContext);
+  const [timeRemaining, setTimeRemaining] = useState(calculateTimeRemaining(item.date, item.heure));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeRemaining(calculateTimeRemaining(item.date, item.heure));
+    }, 60000); // Met à jour chaque minute
+
+    return () => clearInterval(interval);
+  }, [item.date, item.heure]);
 
   const handleDelete = async () => {
     try {
@@ -118,6 +162,54 @@ function ItemNotifications({ item, OnPress }: Props) {
           </Text>
         </View>
 
+        {/* Countdown Section */}
+        <View style={styles.countdownRow}>
+          <View
+            style={[
+              styles.countdownContainer,
+              {
+                backgroundColor: timeRemaining.expired
+                  ? darkMode
+                    ? "rgba(239, 68, 68, 0.15)"
+                    : "rgba(239, 68, 68, 0.1)"
+                  : darkMode
+                  ? "rgba(16, 185, 129, 0.15)"
+                  : "rgba(16, 185, 129, 0.1)",
+              },
+            ]}
+          >
+            <View style={styles.countdownContent}>
+              <Ionicons
+                name={timeRemaining.expired ? "play-circle-outline" : "timer-outline"}
+                size={16}
+                color={timeRemaining.expired ? "#ef4444" : "#10b981"}
+                style={styles.countdownIcon}
+              />
+              <Text
+                style={[
+                  styles.countdownText,
+                  {
+                    color: timeRemaining.expired ? "#ef4444" : "#10b981",
+                    fontWeight: "700",
+                  },
+                ]}
+              >
+                {timeRemaining.text}
+              </Text>
+              {!timeRemaining.expired && (
+                <View style={styles.pulseDot}>
+                  <View
+                    style={[
+                      styles.pulseDotInner,
+                      { backgroundColor: "#10b981" },
+                    ]}
+                  />
+                </View>
+              )}
+            </View>
+          </View>
+        </View>
+
         {/* Rappels Section */}
         {hasReminders && (
           <View style={styles.reminderRow}>
@@ -189,6 +281,7 @@ function ItemNotifications({ item, OnPress }: Props) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -234,7 +327,7 @@ const styles = StyleSheet.create({
   timeRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 10,
   },
   timeIcon: {
     marginRight: 6,
@@ -242,6 +335,42 @@ const styles = StyleSheet.create({
   timeText: {
     fontSize: 13,
     fontWeight: "500",
+  },
+  countdownRow: {
+    marginBottom: 12,
+  },
+  countdownContainer: {
+    alignSelf: "flex-start",
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: "rgba(16, 185, 129, 0.2)",
+  },
+  countdownContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  countdownIcon: {
+    marginRight: 6,
+  },
+  countdownText: {
+    fontSize: 13,
+    letterSpacing: 0.5,
+  },
+  pulseDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginLeft: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  pulseDotInner: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    opacity: 0.8,
   },
   reminderRow: {
     flexDirection: "row",

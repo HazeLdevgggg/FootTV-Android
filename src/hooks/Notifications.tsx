@@ -55,9 +55,9 @@ export async function setupNotifications(navigation, context: NotificationContex
   console.log('FCM NewToken: ' + NewToken);
 
   // Si le token a changé, on l’enregistre
-  if (NewToken != token) {
+  if (NewToken != token || token === "") {
 
-    //console.log(params);
+    console.log(`${AppConfig.API_BASE_URL}${routes.Push}?apikey=${AppConfig.API_Key}&site=300`);
     try{
       const response = await fetch(`${AppConfig.API_BASE_URL}${routes.Push}?apikey=${AppConfig.API_Key}&site=300`, {
         method: 'POST',
@@ -67,7 +67,7 @@ export async function setupNotifications(navigation, context: NotificationContex
         },
         body: JSON.stringify({
           profil: profil_id,
-          token: token,
+          token: NewToken,
           rand: Math.random()
         }),
       });
@@ -91,7 +91,7 @@ export async function setupNotifications(navigation, context: NotificationContex
   messaging().onMessage(async remoteMessage => {
     console.log('FCM message reçu en premier plan:', remoteMessage);
     const data = remoteMessage.data;
-    navigate(navigation, data.infos, data.direct);
+   // navigate(navigation, data.infos, data.direct);
   });
 
   // Notifications reçues en arrière-plan
@@ -124,7 +124,7 @@ function navigate(navigation, info, match) {
     navigation.push("Article", { id: info });
   }
   if (match && match != "0") {
-    navigation.push("Home");
+    navigation.push("Notifications");
   }
 }
 

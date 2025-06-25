@@ -26,7 +26,8 @@ import { routes } from "../../routes/routes";
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 import NotificationTime from "../layout/NotificationTIme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-type Props = {
+import { useInterstitial } from "../../hooks/Pub";
+  type Props = {
   item: ItemList;
   isVisible: boolean;
   onClose: () => void;
@@ -45,6 +46,7 @@ const OpenURLButton = (url: string) => {
 
 const NotificationModal = ({ item, isVisible, onClose }: Props) => {
   const {profil_id} = useContext(ThemeContext);
+  const { showInterstitial } = useInterstitial();
   const [loadingDescription, setLoadingDescription] = useState<boolean>(true);
   const [description, setDescription] = useState<string>("");
   const [NotificationTimeModal, setNotificationTimeModal] = useState<boolean>(false);
@@ -137,7 +139,7 @@ const NotificationModal = ({ item, isVisible, onClose }: Props) => {
               visibilityTime: 2000,
             });
           }
-          //showInterstitial();
+          showInterstitial();
         }} matchID={item.id} date={item.date} heure={item.heure} name="Notification" icon="notifications" />
       </>
     );
@@ -150,6 +152,7 @@ const NotificationModal = ({ item, isVisible, onClose }: Props) => {
       presentationStyle={Platform.OS === 'ios' ? "pageSheet" : "fullScreen"}
       animationType="slide"
       onRequestClose={onClose}
+      style={{ flex: 1, backgroundColor: AppConfig.BackgroundColor(darkMode) }}
       statusBarTranslucent
     >
       <View style={[styles.container, { backgroundColor: AppConfig.BackgroundColor(darkMode), paddingTop: insets.top }]}>

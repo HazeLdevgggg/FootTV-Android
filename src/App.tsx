@@ -64,10 +64,10 @@ function AppContainer() {
     useEffect(() => {
         async function prepareApp() {
             try {
-                initializeDidomi();
-                initializeGAM();
-                preloadInterstitial();
-                createNotificationChannel();
+                await initializeDidomi();
+                await initializeGAM();
+                await preloadInterstitial();
+                await createNotificationChannel();
           
             } finally {
                 await SplashScreen.hideAsync(); // Hide splash screen after init

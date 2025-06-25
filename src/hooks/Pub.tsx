@@ -9,7 +9,6 @@ import {
 import mobileAds from "react-native-google-mobile-ads";
 import { AppConfig } from "../AppConfig";
 import { ThemeContext } from "../context/ThemeContext";
-
 // 🔁 Interstitial global (garde-le global)
 const INTERSTITIAL_UNIT_ID = "/49926454/madeinfoot>appli/une>topic>interstitiel";
 let interstitial = InterstitialAd.createForAdRequest(INTERSTITIAL_UNIT_ID, {
@@ -38,9 +37,11 @@ export const preloadInterstitial = () => {
     }
 };
 
+
 // ✅ Hook personnalisé pour gérer les interstitiels
 export const useInterstitial = () => {
-    const { interstitialLoad, setInterstitialLoad } = useContext(ThemeContext);
+    const [interstitialLoad, setInterstitialLoad] = useState<string>("0");
+
 
     useEffect(() => {
         setupInterstitialListeners(setInterstitialLoad);
@@ -115,20 +116,23 @@ export const Banner = ({ unitId, darkMode }: BannerProps) => (
 );
 
 export const BannerHeader = ({ unitId, darkMode }: BannerProps) => (
-    <View style={[styles.BannerHeader, {
-        backgroundColor: AppConfig.BackGroundButton(darkMode),
-        shadowColor: AppConfig.ShadowColor(darkMode),
-    }]}>
-        <View style={{ width: 320, height: 60, justifyContent: "center", alignItems: "center" }}>
-            <GAMBannerAd
-                unitId={unitId}
-                sizes={[BannerAdSize.LEADERBOARD]}
-                requestOptions={{
-                    keywords: ["sports", "football"],
-                    contentUrl: "",
-                }}
-            />
-        </View>
+    <View
+        style={[
+            styles.BannerHeader,
+            {
+                backgroundColor: AppConfig.BackGroundButton(darkMode),
+                shadowColor: AppConfig.ShadowColor(darkMode),
+            },
+        ]}
+    >
+        <GAMBannerAd
+            unitId={unitId}
+            sizes={[BannerAdSize.LEADERBOARD]}
+            requestOptions={{
+                keywords: ["sports", "football"],
+                contentUrl: "",
+            }}
+        />
     </View>
 );
 
@@ -169,14 +173,16 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: 8,
-        paddingHorizontal: 8,
+        padding: 8,
         borderRadius: 10,
         elevation: 2,
-        height: 70,
         shadowOpacity: 0.5,
         shadowRadius: 4,
         shadowOffset: { width: 0, height: 2 },
+        overflow: "hidden", // 🔐 important pour forcer la box à ne pas déborder
+        width: "100%", // 🔒 s'adapte à l'écran
+        maxWidth: 360, // 🧱 largeur max pour que la pub reste bien dans sa boîte
+        alignSelf: "center", // 🧲 centre la bannière
     },
     BannerFooter: {
         flexDirection: "column",
