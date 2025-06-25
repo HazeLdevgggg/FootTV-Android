@@ -16,6 +16,7 @@ import OnBoarding from "./screens/OnBoarding/Onboarding";
 import Loading from './components/layout/Loading';
 import Toast from 'react-native-toast-message';
 import { ToastConfig, BaseToast } from 'react-native-toast-message';
+import { createNotificationChannel } from './hooks/Notifications';
 // Préchargement des assets
 
 Asset.loadAsync([
@@ -66,6 +67,7 @@ function AppContainer() {
                 initializeDidomi();
                 initializeGAM();
                 preloadInterstitial();
+                createNotificationChannel();
           
             } finally {
                 await SplashScreen.hideAsync(); // Hide splash screen after init
@@ -73,6 +75,7 @@ function AppContainer() {
         }
         prepareApp();
     }, []);
+    //si première connexion setOnBoarding(2);
     if(onBoarding === 2) setDarkMode(true);
     return (
         <>

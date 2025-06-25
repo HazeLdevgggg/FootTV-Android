@@ -19,7 +19,7 @@ function NotificationTime({
     name,
     icon,
 }: {
-    onValidate: (param:string[]) => void;
+    onValidate: (minute:number,heure:number,jour:number) => void;
     matchID: string;
     date: string;
     heure: string;
@@ -42,8 +42,6 @@ function NotificationTime({
     if (diffInMinutes >= 5) DateNotification.push({ id: "5", name: "5 minutes avant" });
     if (diffInMinutes >= 60) DateNotification.push({ id: "60", name: "1 heure avant" });
     if (diffInMinutes >= 1440) DateNotification.push({ id: "1440", name: "1 jour avant" });
-    if (diffInMinutes >= 10080) DateNotification.push({ id: "10080", name: "1 semaine avant" });
-    if (diffInMinutes >= 43200) DateNotification.push({ id: "43200", name: "1 mois avant" }); // 43200 minutes = 30 jours
     type DateNotificationType = {
         id: string;
         name: string;
@@ -61,10 +59,11 @@ function NotificationTime({
     const handleFilterValidate = () => {
         setIsDropdownVisible(false);
         setSelectedFilter(true);
-        onValidate(Object.keys(DateNotificationToggleFilters).filter((id) => DateNotificationToggleFilters[id]));
+        const newparam = Object.keys(DateNotificationToggleFilters).filter((id) => DateNotificationToggleFilters[id]);
+        onValidate(newparam.includes("5") ? 1 : 0,newparam.includes("60") ? 1 : 0,newparam.includes("1440") ? 1 : 0);
     }
 
-    const insets = useSafeAreaInsets();
+    const insets = useSafeAreaInsets(); 
     const selectedCount = Object.keys(DateNotificationToggleFilters).filter((id) => DateNotificationToggleFilters[id]).length;
 
     return (

@@ -19,7 +19,6 @@ import { ItemList } from "../../utils/ItemListType";
 import MyImage from "../tags/MyImage";
 import { ThemeContext } from "../../context/ThemeContext";
 import { AppConfig } from "../../AppConfig";
-import { showInterstitial } from "../../hooks/Pub";
 import ScreenHeaderNoIcon from "../layout/ScreenHeader/ScreenHeaderNoIcon";
 import Loading from "../layout/Loading";
 import { useState } from "react";
@@ -45,10 +44,11 @@ const OpenURLButton = (url: string) => {
 };
 
 const NotificationModal = ({ item, isVisible, onClose }: Props) => {
+  const {profil_id} = useContext(ThemeContext);
   const [loadingDescription, setLoadingDescription] = useState<boolean>(true);
   const [description, setDescription] = useState<string>("");
   const [NotificationTimeModal, setNotificationTimeModal] = useState<boolean>(false);
-useEffect(() => {
+  useEffect(() => {
     if (item.type === 'emission') {
       const getDescription = async () => {
         setLoadingDescription(true);
@@ -110,12 +110,24 @@ useEffect(() => {
   if (NotificationTimeModal && item.type === 'emission') {
     return (
       <>
-        <NotificationTime onValidate={(param: string[]) => {
-          console.log(param);
+        <NotificationTime onValidate={(minute: number, heure: number, jour: number) => {
           setNotificationTimeModal(false);
           onClose();
-          console.log(param.length)
-          if (param.length > 0) {
+          console.log("heure"+heure,"minutes"+minute,"jours"+jour)
+          const getNotifications = async () => {
+            try {
+              console.log(`${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=insert&id=${profil_id}&minute=${minute}&heure=${heure}&jour=${jour}&emission=${item.id}`)
+              const response = await fetch(
+                `${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=insert&id=${profil_id}&minute=${minute}&heure=${heure}&jour=${jour}&emission=${item.id}`,
+              );
+              const data = await response.json();
+              console.log(data);
+            } catch (error) {
+              console.error(error);
+            }
+          };
+          getNotifications();
+          if (heure > 0 || minute > 0 || jour > 0) {
             Toast.show({
               type: 'success',
               text1: 'Validé',

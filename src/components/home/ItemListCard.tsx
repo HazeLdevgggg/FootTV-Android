@@ -17,15 +17,18 @@ function ItemListCard(props: ItemList) {
 
 
   const MatchEnCours = () => {
-    const [day, month, year] = props.date.split("/");
-    const [hour, minute] = props.heure.split("h");
-    const matchStart = new Date(
-      `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${hour.padStart(2, "0")}:${minute.padStart(2, "0")}:00`,
-    );
-    const now = new Date();
+    if (props.type === "emission") {
+      const [day, month, year] = props.date.split("/");
+      const [hour, minute] = props.heure.split("h");
+      const matchStart = new Date(
+        `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${hour.padStart(2, "0")}:${minute.padStart(2, "0")}:00`,
+      );
+      const now = new Date();
 
-    const diffInHours = (now.getTime() - matchStart.getTime()) / 3600000; // différence en heures
-    return Math.abs(diffInHours) <= 1;
+      const diffInHours = (now.getTime() - matchStart.getTime()) / 3600000; // différence en heures
+      return Math.abs(diffInHours) <= 1;
+    }
+    else return false
   };
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -33,99 +36,105 @@ function ItemListCard(props: ItemList) {
 
   return (
     <>
-      <TouchableOpacity
-        style={[
-          styles.container,
-          {
-            backgroundColor: AppConfig.BackGroundButton(darkMode),
-            shadowColor: AppConfig.ShadowColor(darkMode),
-          },
-        ]}
-        onPress={() => setModalVisible(true)}
-        activeOpacity={0.85}
-      >
-        {/* Gradient overlay pour un effet moderne */}
-        <View style={[styles.gradientOverlay, {
-          backgroundColor: darkMode ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.01)'
-        }]} />
+      {props.type === "emission" ? (
+        <>
+          <TouchableOpacity
+            style={[
+              styles.container,
+              {
+                backgroundColor: AppConfig.BackGroundButton(darkMode),
+                shadowColor: AppConfig.ShadowColor(darkMode),
+              },
+            ]}
+            onPress={() => setModalVisible(true)}
+            activeOpacity={0.85}
+          >
+            {/* Gradient overlay pour un effet moderne */}
+            <View style={[styles.gradientOverlay, {
+              backgroundColor: darkMode ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.01)'
+            }]} />
 
-        {/* Container principal avec glassmorphism */}
-        <View style={styles.contentContainer}>
+            {/* Container principal avec glassmorphism */}
+            <View style={styles.contentContainer}>
 
-          {/* Section logo avec effet de bordure moderne */}
-          <View style={styles.logoContainer}>
-            <View style={[styles.logoBorder, {
-              borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'
-            }]}>
-              <MyImage
-                source={props.logo}
-                style={styles.logo}
-                contentFit={"contain"}
-              />
-            </View>
-          </View>
-
-          {/* Section contenu */}
-          <View style={styles.textContainer}>
-
-            {/* Header avec statut et heure */}
-            <View style={styles.headerRow}>
-              {MatchEnCours() && (
-                <View style={[styles.modernLiveContainer, { marginRight: 12 }]}>
-                  <View style={styles.modernLiveDot} />
-                  <Text style={styles.modernLiveText}>Match En Cours</Text>
+              {/* Section logo avec effet de bordure moderne */}
+              <View style={styles.logoContainer}>
+                <View style={[styles.logoBorder, {
+                  borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'
+                }]}>
+                  <MyImage
+                    source={props.logo}
+                    style={styles.logo}
+                    contentFit={"contain"}
+                  />
                 </View>
-              )}
+              </View>
 
-              {props.direct === "0" && (
-                <View style={styles.modernReplayContainer}>
-                  <View style={styles.modernReplayDot} />
-                  <Text style={styles.modernReplayText}>REPLAY</Text>
+              {/* Section contenu */}
+              <View style={styles.textContainer}>
+
+                {/* Header avec statut et heure */}
+                <View style={styles.headerRow}>
+                  {MatchEnCours() && (
+                    <View style={[styles.modernLiveContainer, { marginRight: 12 }]}>
+                      <View style={styles.modernLiveDot} />
+                      <Text style={styles.modernLiveText}>Match En Cours</Text>
+                    </View>
+                  )}
+
+                  {props.direct === "0" && (
+                    <View style={styles.modernReplayContainer}>
+                      <View style={styles.modernReplayDot} />
+                      <Text style={styles.modernReplayText}>REPLAY</Text>
+                    </View>
+                  )}
                 </View>
-              )}
+
+                {/* Date avec style moderne */}
+                <Text style={[
+                  styles.modernDateText,
+                  { color: AppConfig.SecondaryTextColor(darkMode) }
+                ]}>
+                  {props.heure} | {props.date}
+                </Text>
+
+                {/* Titre principal */}
+                <Text
+                  style={[
+                    styles.modernTitleText,
+                    { color: AppConfig.MainTextColor(darkMode) }
+                  ]}
+                  numberOfLines={2}
+                >
+                  {props.titre}
+                </Text>
+
+                {/* Description */}
+                <Text
+                  style={[
+                    styles.modernDescText,
+                    { color: AppConfig.SecondaryTextColor(darkMode) }
+                  ]}
+                  numberOfLines={2}
+                >
+                  {props.desc}
+                </Text>
+              </View>
             </View>
 
-            {/* Date avec style moderne */}
-            <Text style={[
-              styles.modernDateText,
-              { color: AppConfig.SecondaryTextColor(darkMode) }
-            ]}>
-              {props.heure} | {props.date}
-            </Text>
+            {/* Indicateur d'interaction - SUPPRIMÉ */}
+          </TouchableOpacity>
 
-            {/* Titre principal */}
-            <Text
-              style={[
-                styles.modernTitleText,
-                { color: AppConfig.MainTextColor(darkMode) }
-              ]}
-              numberOfLines={2}
-            >
-              {props.titre}
-            </Text>
-
-            {/* Description */}
-            <Text
-              style={[
-                styles.modernDescText,
-                { color: AppConfig.SecondaryTextColor(darkMode) }
-              ]}
-              numberOfLines={2}
-            >
-              {props.desc}
-            </Text>
-          </View>
-        </View>
-
-        {/* Indicateur d'interaction - SUPPRIMÉ */}
-      </TouchableOpacity>
-
-      {modalVisible && (
-        <NotificationModal
-          item={props}
-          isVisible={modalVisible}
-          onClose={() => setModalVisible(false)}
-        />
+          {modalVisible && (
+            <NotificationModal
+              item={props}
+              isVisible={modalVisible}
+              onClose={() => setModalVisible(false)}
+            />
+          )}
+        </>
+      ) : (
+        null
       )}
     </>
   );

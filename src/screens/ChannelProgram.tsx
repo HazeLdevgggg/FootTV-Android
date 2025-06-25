@@ -23,11 +23,11 @@ import ScreenHeader from "../components/layout/ScreenHeader/ScreenHeader";
 import ItemListCard from "../components/home/ItemListCard";
 import NotFound from "../components/layout/NotFound";
 import { routes } from "../routes/routes";
+import { ItemList } from "../utils/ItemListType";
 function ChannelProgram() {
   const route = useRoute<RouteProp<StackScreens, "ChannelProgram">>();
-  const { id } = route.params;
-  const { mode } = route.params;
-  const [channels, setChannels] = useState<ChannelProgramType[]>([]);
+  const { id, mode } = route.params ?? {};
+  const [channels, setChannels] = useState<ItemList[]>([]);
   const [empty, setEmpty] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const navigation = useTypedNavigation();
@@ -36,8 +36,17 @@ function ChannelProgram() {
   const [isFilterApplied, setIsFilterApplied] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
 
+  if (!id || !mode) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Paramètres manquants pour cette page.</Text>
+      </View>
+    );
+  }
+
   const DateToStringUI = (date: string) => {
     if (!date) return "";
+    console.log(date)
     const dateSplit = date.split("-");
     if (dateSplit.length !== 3) return "";
     return `${dateSplit[2]}/${dateSplit[1]}/${dateSplit[0]}`;
@@ -115,14 +124,13 @@ function ChannelProgram() {
             }}
           >
             {Object.entries(
-              channels.reduce(
-                (acc: { [key: string]: ChannelProgramType[] }, item) => {
+              channels.reduce((acc: { [key: string]: ItemList[] }, item) => {
+                if (item?.type === "emission" && item?.date) {
                   if (!acc[item.date]) acc[item.date] = [];
                   acc[item.date].push(item);
-                  return acc;
-                },
-                {},
-              ),
+                }
+                return acc;
+              }, {}),
             ).map(([date, items]) => {
               if (!isFilterApplied) {
                 return (
@@ -130,34 +138,26 @@ function ChannelProgram() {
                   }}>
                     <SectionDivider icon={"calendar-outline"} label={date} />
                     {items.map((item, index) => (
-                      <React.Fragment key={"program-fragment-" + item.id}>
-                        <View key={"ChannelProgramResult" + id} style={{ marginHorizontal: 12 }}>
-                          <ItemListCard
-                           type= 'emission'
-                           id={item.id}
-                           date={item.date}
-                           heure={item.heure}
-                           titre={item.titre}
-                           desc={item.desc}
-                           direct={item.direct}
-                           categorie={item.categorie}
-                           chaine={item.chaine}
-                           logo={item.logo}
-                           image={item.image}
-                           url={item.url}
-                          />
-                        </View>
-                        {index > 0 &&
-                          index % AppConfig.PubEachNumberOfBlock() === 0 && (
-                            <Banner
-                              darkMode={darkMode}
-                              key={"banner-program-filtre-" + index}
-                              unitId={
-                                "/49926454/madeinfoot>appli/une>topic>interstitiel"
-                              }
+                      <React.Fragment key={"program-fragment-" + item.type + index}>
+                        {item.type === "emission" && (
+                          <View key={"ChannelProgramResult" + item.id} style={{ marginHorizontal: 12 }}>
+                            <ItemListCard
+                              type='emission'
+                              id={item.id}
+                              date={item.date}
+                              heure={item.heure}
+                              titre={item.titre}
+                              desc={item.desc}
+                              direct={item.direct}
+                              categorie={item.categorie}
+                              chaine={item.chaine}
+                              logo={item.logo}
+                              image={item.image}
+                              url={item.url}
                             />
-                          )}
-
+                          </View>
+                        )
+                        }
                       </React.Fragment>
                     ))}
                   </View>
@@ -168,22 +168,14 @@ function ChannelProgram() {
                   <View key={date}>
                     <SectionDivider icon={"calendar-outline"} label={date} />
                     {items.map((item, index) => (
-                      <React.Fragment key={"program-fragment-" + item.id}>
-                        {index > 0 &&
-                          index % AppConfig.PubEachNumberOfBlock() === 0 && (
-                            <Banner
-                              key={"banner-program-" + index}
-                              darkMode={darkMode}
-                              unitId={
-                                "/49926454/madeinfoot>appli/une>topic>interstitiel"
-                              }
-                            />
-                          )}
+                      <React.Fragment key={"program-fragment-" + item.type + index}>
+                       {item.type === "emission" && (
                         <ItemListCard
-                          key={"program-item-" + item.id}
-                          type="emission"
+                          key={"program-item-" + item.type + index}
+                          type={item.type}
                           {...item}
                         />
+                      )}
                       </React.Fragment>
                     ))}
                   </View>

@@ -34,7 +34,7 @@ function Home() {
   const [NextPageLoading, setNextPageLoading] = useState<boolean>(false);
   const [PageCount, SetPageCount] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  const context = useContext(ThemeContext);
   const navigator = useTypedNavigation();
 
   // To know which days are selected
@@ -52,9 +52,9 @@ function Home() {
 
   useEffect(() => {
 
-     if (!notificationsInitialized) { 
+    if (!notificationsInitialized) {
       console.log("Init Notification");
-      setupNotifications(navigator); // 🔹 Passe la navigation ici
+      setupNotifications(navigator, context); // 🔹 Passe la navigation ici
       notificationsInitialized = true;
     }
 
@@ -89,7 +89,8 @@ function Home() {
       <Loading />
     );
   }
-  const MatchEnCours = (date, heure) => {
+  const MatchEnCours = (date: string, heure: string) => {
+    console.log(date, heure);
     const [day, month, year] = date.split("/");
     const [hour, minute] = heure.split("h");
     const matchStart = new Date(
@@ -170,9 +171,12 @@ function Home() {
             item.emissions = item.emissions.filter((a) => a.direct === "1");
           }
           if (filterState.EnCours) {
-            item.emissions = item.emissions.filter((a) =>
-              MatchEnCours(a.date, a.heure)
-            );
+            item.emissions = item.emissions.filter((a) => {
+              if (a.date && a.heure) {
+                return MatchEnCours(a.date, a.heure);
+              }
+              return false;
+            });
           }
           item.nbr = item.emissions.length;
         });
@@ -226,7 +230,7 @@ function Home() {
                   }
                   if (EnCours) {
                     item.emissions = item.emissions.filter((a) =>
-                      MatchEnCours(a.date, a.heure)
+                      item.type === 'emission' ? MatchEnCours(a.date, a.heure) : false
                     );
                   }
                   item.nbr = item.emissions.length;
@@ -246,7 +250,7 @@ function Home() {
                 }
                 if (EnCours) {
                   filtered = filtered.filter((item) =>
-                    item.type === 'emission' && MatchEnCours(item.date, item.heure)
+                    item.type === 'emission' ? MatchEnCours(item.date, item.heure) : false
                   );
                 }
                 setItemList(filtered);
@@ -300,7 +304,7 @@ function Home() {
                         unitId={
                           item.banner.id
                         }
-                      /> 
+                      />
                     )
                   ))
                 ) : (

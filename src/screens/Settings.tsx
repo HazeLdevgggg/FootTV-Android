@@ -21,32 +21,32 @@ function Settings() {
 
   // API request when Toggle Match Notifications
   const toggleSwitchMatch = async () => {
-    const newValue = notification_emission === "1" ? "0" : "1";
     try {
       const response = await fetch(
         `${AppConfig.API_BASE_URL}${routes.ProfileUpdate}?apikey=${AppConfig.API_Key}&etat=${
-          newValue === "1" ? 1 : 0
+          notification_emission === "1" ? 1 : 0
         }&type=notification-emission&profil=${profil_id}`
       );
       const data = await response.json();
       console.log("Notification Match response:", data);
-      await setNotification_emission(newValue);
+      console.log("notification_emission",notification_emission === "1" ? "0" : "1");
+      await setNotification_emission(notification_emission === "1" ? "0" : "1");
     } catch (error) {
       console.error("Error updating notification settings:", error);
     }
   };
   // API request when Toggle Article Notifications
   const toggleSwitchArticle = async () => {
-    const newValue = notification_info === "1" ? "0" : "1";
     try {
       const response = await fetch(
         `${AppConfig.API_BASE_URL}${routes.ProfileUpdate}?apikey=${AppConfig.API_Key}&etat=${
-          newValue === "1" ? 1 : 0
+          notification_info === "1" ? 1 : 0
         }&type=notification-info&profil=${profil_id}`
       );
       const data = await response.json();
       console.log("Notification Article response:", data);
-      await setNotification_info(newValue);
+      console.log("notification_info",notification_info === "1" ? "0" : "1");
+      await setNotification_info(notification_info === "1" ? "0" : "1");
     } catch (error) {
       console.error("Error updating notification settings:", error);
     }
@@ -153,7 +153,7 @@ function Settings() {
         </Text>
         <SectionDivider icon="build-outline" label="Autres" />
         <View style={styles.horizontal2}>
-          <View style={[styles.featureCard, { backgroundColor: AppConfig.BackGroundButton(darkMode) }]}>
+          <View style={[styles.featureCard, { backgroundColor: AppConfig.BackGroundButton(darkMode),width:'100%' }]}>
             <TouchableOpacity onPress={() => showConsentNotice()}>
               <View style={styles.featureHeader}>
                 <Ionicons name="megaphone-outline" size={24} color="#F9A825" />
@@ -167,7 +167,7 @@ function Settings() {
           </View>
         </View>
         <View style={styles.horizontal2}>
-          <View style={[styles.featureCard, { backgroundColor: AppConfig.BackGroundButton(darkMode) }]}>
+          <View style={[styles.featureCard, { backgroundColor: AppConfig.BackGroundButton(darkMode),width:'100%' }]}>
             <TouchableOpacity onPress={() => navigation.push("LegalMention")}>
               <View style={styles.featureHeader}>
                 <Ionicons name="document-text-outline" size={24} color="#4CAF50" />

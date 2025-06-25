@@ -1,45 +1,58 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  Pressable,
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { ItemChannelType } from "../../utils/ItemChannelType";
 import MyImage from "../tags/MyImage";
-import { Button } from "@react-navigation/elements";
-import { useTypedNavigation } from "../../navigation/navigation";
+import { Ionicons } from "@expo/vector-icons";
 import { ThemeContext } from "../../context/ThemeContext";
 import { AppConfig } from "../../AppConfig";
-import { Ionicons } from "@expo/vector-icons";
 import { NotificationsType } from "../../utils/NotificationsType";
 
-function ItemNotifications(props: NotificationsType) {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+function formatReminderLabel(key: string, value: string) {
+  switch (key) {
+    case "minute":
+      return `5 min`;
+    case "heure":
+      return `1 h`;
+    case "jour":
+      return `1 j`;
+    default:
+      return value;
+  }
+}
 
-  const formatNotificationTime = (id: string): string => {
-    const timeMap: Record<string, string> = {
-      "5": "5 min",
-      "60": "1h",
-      "3600": "1j",
-      "86400": "1sem",
-      "604800": "1mois",
-    };
-    return timeMap[id] || id;
+type Props = {
+  item: NotificationsType;
+  OnPress: (id: string) => void;
+};
+
+function ItemNotifications({ item, OnPress }: Props) {
+  const { darkMode, profil_id } = useContext(ThemeContext);
+
+  const handleDelete = async () => {
+    try {
+      console.log(`${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=delete&id=${profil_id}&emission=${item.id}`)
+      const response = await fetch(
+        `${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=delete&id=${profil_id}&emission=${item.id}`,
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+    OnPress(item.id);
   };
 
-  const handleDelete = () => {
-    Alert.alert(
-      "Supprimer la notification",
-      "Êtes-vous sûr de vouloir supprimer cette notification ?",
-      [
-        { text: "Annuler", style: "cancel" },
-        { text: "Supprimer", style: "destructive", onPress: () => {} },
-      ]
-    );
-  };
+  // Vérifie si on doit afficher les rappels (au moins une valeur non vide et > 0)
+  const hasReminders =
+    item.notification &&
+    (Number(item.notification.minute) > 0 ||
+      Number(item.notification.heure) > 0 ||
+      Number(item.notification.jour) > 0);
 
   return (
     <View
@@ -67,7 +80,7 @@ function ItemNotifications(props: NotificationsType) {
           ]}
         >
           <MyImage
-            source={props.logo}
+            source={item.logo}
             style={styles.logo}
             contentFit={"contain"}
           />
@@ -84,7 +97,7 @@ function ItemNotifications(props: NotificationsType) {
             ]}
             numberOfLines={2}
           >
-            {props.title}
+            {item.titre}
           </Text>
         </View>
 
@@ -101,12 +114,12 @@ function ItemNotifications(props: NotificationsType) {
               { color: AppConfig.SecondaryTextColor(darkMode) },
             ]}
           >
-            {props.heure} • {props.date}
+            {item.heure} • {item.date}
           </Text>
         </View>
 
         {/* Rappels Section */}
-        {props.notificationID && props.notificationID.length > 0 && (
+        {hasReminders && (
           <View style={styles.reminderRow}>
             <Ionicons
               name="notifications-outline"
@@ -123,28 +136,34 @@ function ItemNotifications(props: NotificationsType) {
               Rappels:
             </Text>
             <View style={styles.reminderTags}>
-              {props.notificationID.slice(0, props.notificationID.length).map((id, index) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.reminderTag,
-                    {
-                      backgroundColor: darkMode
-                        ? "rgba(59, 130, 246, 0.15)"
-                        : "rgba(59, 130, 246, 0.1)",
-                    },
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.reminderTagText, 
-                      { color: darkMode ? "#60a5fa" : "#3b82f6" },
-                    ]}
-                  >
-                    {formatNotificationTime(id)}
-                  </Text>
-                </View>
-              ))}
+              {["jour", "heure", "minute"].map((key) => {
+                const value = item.notification[key];
+                if (Number(value) > 0) {
+                  return (
+                    <View
+                      key={key}
+                      style={[
+                        styles.reminderTag,
+                        {
+                          backgroundColor: darkMode
+                            ? "rgba(59, 130, 246, 0.15)"
+                            : "rgba(59, 130, 246, 0.1)",
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.reminderTagText,
+                          { color: darkMode ? "#60a5fa" : "#3b82f6" },
+                        ]}
+                      >
+                        {formatReminderLabel(key, value)}
+                      </Text>
+                    </View>
+                  );
+                }
+                return null;
+              })}
             </View>
           </View>
         )}
@@ -170,7 +189,6 @@ function ItemNotifications(props: NotificationsType) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -178,7 +196,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 20,
     marginVertical: 6,
-    marginHorizontal: 12,
+    marginHorizontal: 16,
     shadowOpacity: 0.08,
     shadowRadius: 16,
     shadowOffset: { width: 0, height: 4 },

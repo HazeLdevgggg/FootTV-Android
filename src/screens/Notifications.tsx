@@ -1,39 +1,80 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { View, ScrollView } from "react-native";
 import { ThemeContext } from "../context/ThemeContext";
 import { AppConfig } from "../AppConfig";
-import { ScrollView, StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import ItemNotifications from "../components/layout/ItemNotifications";
-import { Ionicons } from "@expo/vector-icons";
-import { useTypedNavigation } from "../navigation/navigation";
 import SectionDivider from "../components/home/SectionDivider";
 import ScreenHeader from "../components/layout/ScreenHeader/ScreenHeader";
+import Empty from "../components/layout/Empty";
+import { NotificationsType } from "../utils/NotificationsType";
+import { useTypedNavigation } from "../navigation/navigation";
+
 function Notifications() {
   const navigation = useTypedNavigation();
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const { profil_id, darkMode } = useContext(ThemeContext);
+  const [notifications, setNotifications] = useState<NotificationsType[]>([]);
+
+  useEffect(() => {
+    const getNotifications = async () => {
+      try {
+        const url = `${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=list&id=${profil_id}&rand=${Math.random()}`;
+        console.log(url);
+        const response = await fetch(url);
+        const data = await response.json();
+        setNotifications(data.liste);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (profil_id) {
+      getNotifications();
+    }
+  }, []); // Re-fetch si profil_id change
+
+  // Fonction pour supprimer une notification par id
+  const handleDeleteNotification = (id: string) => {
+    setNotifications((current) => current.filter((n) => n.id !== id));
+  };
+
   return (
-    <View>
-      <ScreenHeader color="#FF6B6B" name="Notifications" icon="notifications-outline" />
+    <View style={{ flex: 1 }}>
+      <ScreenHeader
+        color="#FF6B6B"
+        name="Notifications"
+        icon="notifications-outline"
+      />
       <View
         style={{
           backgroundColor: AppConfig.BackgroundColor(darkMode),
-          marginHorizontal: 12,
+          flex: 1,
         }}
       >
-        <ScrollView style={{ paddingBottom: 300 }}>
-          <SectionDivider icon="apps-outline" label="Liste des prochaînes notifications" />
-          <ItemNotifications
-            id={"ddd"}
-            heure={"10h20"}
-            title={"Paris-Inter"}
-            logo={
-              "https://madeinfoot.ouest-france.fr/images/logo-ligues/app16.png"
-            }
-            date={"10/09/12"}
-            notificationID={["5","60","3600","86400","604800",]}
+        <ScrollView  style={{ paddingBottom: 500 }}>
+          <SectionDivider
+            icon="apps-outline"
+            label="Liste des prochaines notifications"
           />
+          {notifications.length > 0 ? (
+            notifications.map((notification) => (
+              <ItemNotifications
+                key={notification.id}
+                item={notification}
+                OnPress={() => handleDeleteNotification(notification.id)}
+              />
+            ))
+          ) : (
+            <Empty
+              title="Aucune notification"
+              subtitle="Vous n'avez pas de notification de prochaines matchs"
+              icon="notifications-outline"
+              color="#FF6B6B"
+            />
+          )}
         </ScrollView>
       </View>
     </View>
   );
 }
+
 export default Notifications;

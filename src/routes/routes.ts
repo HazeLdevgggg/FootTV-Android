@@ -12,4 +12,5 @@ export const routes: { [name: string]: string } = {
     ChannelProgram: "programmes-date.php",
     Channel: "chaines.php",
     Description: "emission.php",
+    Push: "init/push.php",
 };

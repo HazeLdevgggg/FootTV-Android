@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import {
     InterstitialAd,
@@ -7,18 +7,18 @@ import {
     AdEventType,
 } from "react-native-google-mobile-ads";
 import mobileAds from "react-native-google-mobile-ads";
-import Settings from "../constants/Settings";
 import { AppConfig } from "../AppConfig";
-import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
-const INTERSTITIAL_UNIT_ID = "/49926454/madeinfoot>appli/une>topic>interstitiel";
 
+// 🔁 Interstitial global (garde-le global)
+const INTERSTITIAL_UNIT_ID = "/49926454/madeinfoot>appli/une>topic>interstitiel";
 let interstitial = InterstitialAd.createForAdRequest(INTERSTITIAL_UNIT_ID, {
     requestNonPersonalizedAdsOnly: true,
     keywords: ["sports", "football"],
 });
-
 let listeners: (() => void)[] = [];
+
+// 🔁 Initialisation des ads
 export const initializeGAM = async () => {
     try {
         await mobileAds()
@@ -32,42 +32,50 @@ export const initializeGAM = async () => {
     }
 };
 
-// Fonction pour précharger un interstitiel
 export const preloadInterstitial = () => {
     if (!interstitial.loaded) {
-        if (Settings.app.pub.interstitielLoad === 0) {
-            interstitial.load();
-        }
+        interstitial.load();
     }
 };
 
-// Fonction pour afficher un interstitiel si prêt
+// ✅ Hook personnalisé pour gérer les interstitiels
+export const useInterstitial = () => {
+    const { interstitialLoad, setInterstitialLoad } = useContext(ThemeContext);
 
-export const showInterstitial = (onClose?: () => void) => {
-    if (interstitial.loaded) {
-        const closeListener = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
-            console.log("Interstitial ad closed");
-            if (onClose) onClose();
-            closeListener(); // retire le listener
-            preloadInterstitial(); // prépare la prochaine
-        });
-
-        interstitial.show();
-        Settings.app.pub.interstitielLoad = 0;
-    } else {
-        console.log("Interstitial ad not loaded, preloading...");
+    useEffect(() => {
+        setupInterstitialListeners(setInterstitialLoad);
         preloadInterstitial();
-        if (onClose) onClose(); // fallback si rien n'est chargé
-    }
+    }, []);
+
+    const showInterstitial = (onClose?: () => void) => {
+        if (interstitial.loaded) {
+            const closeListener = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
+                console.log("Interstitial ad closed");
+                if (onClose) onClose();
+                closeListener(); // retire le listener
+                preloadInterstitial();
+            });
+
+            interstitial.show();
+            setInterstitialLoad("0");
+        } else {
+            console.log("Interstitial ad not loaded, preloading...");
+            preloadInterstitial();
+            if (onClose) onClose();
+        }
+    };
+
+    return { showInterstitial };
 };
 
-export const setupInterstitialListeners = () => {
+// 🔁 setupListeners peut maintenant recevoir setInterstitialLoad dynamiquement
+export const setupInterstitialListeners = (setInterstitialLoad?: (value: string) => void) => {
     listeners.forEach(remove => remove());
     listeners = [];
 
     listeners.push(
         interstitial.addAdEventListener(AdEventType.LOADED, () => {
-            Settings.app.pub.interstitielLoad = 1;
+            setInterstitialLoad?.("1");
             console.log("Interstitial ad loaded");
         })
     );
@@ -84,47 +92,40 @@ export const setupInterstitialListeners = () => {
     );
 };
 
+// 🧱 BANNERS
 type BannerProps = {
     unitId: string;
     darkMode: boolean;
 };
 
 export const Banner = ({ unitId, darkMode }: BannerProps) => (
-    <View style={[
-        styles.vertical2,
-        {
-            backgroundColor: AppConfig.BackGroundButton(darkMode),
-            shadowColor: AppConfig.ShadowColor(darkMode),
-        },
-    ]}>
+    <View style={[styles.vertical2, {
+        backgroundColor: AppConfig.BackGroundButton(darkMode),
+        shadowColor: AppConfig.ShadowColor(darkMode),
+    }]}>
         <GAMBannerAd
             unitId={unitId}
             sizes={[BannerAdSize.MEDIUM_RECTANGLE]}
             requestOptions={{
                 keywords: ["sports", "football"],
-                contentUrl: Settings.site.contentUrl,
+                contentUrl: "",
             }}
         />
     </View>
 );
 
 export const BannerHeader = ({ unitId, darkMode }: BannerProps) => (
-    <View
-        style={[
-            styles.BannerHeader,
-            {
-                backgroundColor: AppConfig.BackGroundButton(darkMode),
-                shadowColor: AppConfig.ShadowColor(darkMode),
-            },
-        ]}
-    >
-        <View style={{ width: 320, height: 60, justifyContent: "center", alignItems: "center", overflow: "hidden" }}>
+    <View style={[styles.BannerHeader, {
+        backgroundColor: AppConfig.BackGroundButton(darkMode),
+        shadowColor: AppConfig.ShadowColor(darkMode),
+    }]}>
+        <View style={{ width: 320, height: 60, justifyContent: "center", alignItems: "center" }}>
             <GAMBannerAd
                 unitId={unitId}
                 sizes={[BannerAdSize.LEADERBOARD]}
                 requestOptions={{
                     keywords: ["sports", "football"],
-                    contentUrl: Settings.site.contentUrl,
+                    contentUrl: "",
                 }}
             />
         </View>
@@ -132,50 +133,31 @@ export const BannerHeader = ({ unitId, darkMode }: BannerProps) => (
 );
 
 export const BannerFooter = ({ unitId, darkMode }: BannerProps) => (
-    <View
-        style={[
-            styles.BannerFooter,
-            {
-                backgroundColor: AppConfig.BackGroundButton(darkMode),
-                shadowColor: AppConfig.ShadowColor(darkMode),
-            },
-        ]}
-    >
+    <View style={[styles.BannerFooter, {
+        backgroundColor: AppConfig.BackGroundButton(darkMode),
+        shadowColor: AppConfig.ShadowColor(darkMode),
+    }]}>
         <GAMBannerAd
             unitId={unitId}
             sizes={[BannerAdSize.LEADERBOARD]}
             requestOptions={{
                 keywords: ["sports", "football"],
-                contentUrl: Settings.site.contentUrl,
+                contentUrl: "",
             }}
         />
     </View>
 );
 
-
+// 🎨 Styles
 const styles = StyleSheet.create({
-    bannerContainer: {
-        width: "100%",
-        paddingHorizontal: 12,
-        alignItems: "center",
-        marginVertical: 10,
-    },
-    bannerHeaderContainer: {
-        width: "100%",
-        paddingHorizontal: 12,
-        alignItems: "center",
-        marginVertical: 10,
-        height: 120,
-        justifyContent: "center",
-    },
     vertical2: {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: 8, // au lieu de padding: 8
+        paddingVertical: 8,
         paddingHorizontal: 8,
         borderRadius: 10,
-        marginBottom: 12, // au lieu de marginBottom: 6
+        marginBottom: 12,
         elevation: 2,
         height: 300,
         shadowOpacity: 0.5,
@@ -187,7 +169,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: 8, // au lieu de padding: 8
+        paddingVertical: 8,
         paddingHorizontal: 8,
         borderRadius: 10,
         elevation: 2,
