@@ -171,12 +171,9 @@ function Home() {
             item.emissions = item.emissions.filter((a) => a.direct === "1");
           }
           if (filterState.EnCours) {
-            item.emissions = item.emissions.filter((a) => {
-              if (a.date && a.heure) {
-                return MatchEnCours(a.date, a.heure);
-              }
-              return false;
-            });
+            item.emissions = item.emissions.filter((a) =>
+              a.type === 'emission' ? MatchEnCours(a.date, a.heure) : false
+            );
           }
           item.nbr = item.emissions.length;
         });
@@ -230,7 +227,7 @@ function Home() {
                   }
                   if (EnCours) {
                     item.emissions = item.emissions.filter((a) =>
-                      item.type === 'emission' ? MatchEnCours(a.date, a.heure) : false
+                      a.type === 'emission' ? MatchEnCours(a.date, a.heure) : false
                     );
                   }
                   item.nbr = item.emissions.length;
