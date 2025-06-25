@@ -130,7 +130,7 @@ function Discover() {
                                 { color: AppConfig.MainTextColor(darkMode) },
                             ]}
                         >
-                            61
+                            {AppConfig.Competition_Number}
                         </Text>
                         <Text
                             style={[
@@ -152,7 +152,7 @@ function Discover() {
                                 { color: AppConfig.MainTextColor(darkMode) },
                             ]}
                         >
-                            26
+                            {AppConfig.Channel_Number}
                         </Text>
                         <Text
                             style={[
@@ -174,7 +174,7 @@ function Discover() {
                                 { color: AppConfig.MainTextColor(darkMode) },
                             ]}
                         >
-                            17K+
+                            {AppConfig.Club_Number}
                         </Text>
                         <Text
                             style={[
@@ -193,7 +193,7 @@ function Discover() {
                 </View>
 
                 {/* Section bonus avec style moderne */}
-                <SectionDivider icon="sparkles-outline" label="Fonctionnalités" />
+                <SectionDivider icon="folder-outline" label="Mon espace & réglages" />
                 <View style={styles.featuresContainer}>
                     <View style={[styles.featureCard, { backgroundColor: AppConfig.BackGroundButton(darkMode) }]}>
                         <TouchableOpacity onPress={() => navigation.push("Favoris")}>

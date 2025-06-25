@@ -9,7 +9,6 @@ import Channel from "../screens/Channel";
 import ChannelProgram from "../screens/ChannelProgram";
 import Home from "../screens/Home";
 import { StackScreens } from "./type";
-import Header from "../components/navigation/Header";
 import { Ionicons } from "@expo/vector-icons";
 import Club from "../screens/Club";
 import { ThemeContext } from "../context/ThemeContext";
@@ -129,11 +128,11 @@ const AllScreens = () => {
           }}
         />
         <Tab.Screen
-          name="Découvrir"
+          name="FootTV & Moi"
           component={DiscoverStack}
           options={{
             tabBarIcon: ({ color, size, focused }) => (
-              <Ionicons name={focused ? "compass" : "compass-outline"} size={size} color={color} />
+              <Ionicons name={focused ? "extension-puzzle" : "extension-puzzle-outline"} size={size} color={color} />
             ),
           }}
         />

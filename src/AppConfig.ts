@@ -1,6 +1,9 @@
 export class AppConfig {
   public static API_Key = "2921182712";
   public static API_BASE_URL = "https://madeinfoot.ouest-france.fr/ws/api/programme-tv/versions/3.0/";
+  public static Competition_Number = "62";
+  public static Channel_Number = "26";
+  public static Club_Number = "17K+";
 
   // Texte principal : sombre, mais pas noir
   public static MainTextColor(val: boolean): string {
