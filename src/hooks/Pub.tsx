@@ -150,7 +150,7 @@ export const BannerHeader = ({ unitId, darkMode, pagetype="topic" }: BannerProps
     >
         <GAMBannerAd
             unitId={unitId}
-            sizes={[BannerAdSize.LEADERBOARD]}
+            sizes={[BannerAdSize.LARGE_BANNER ]}
             requestOptions={{
                 keywords: ["sports", "football"],
                 contentUrl: "",
@@ -167,7 +167,7 @@ export const BannerFooter = ({ unitId, darkMode, pagetype="topic" }: BannerProps
     }]}>
         <GAMBannerAd
             unitId={unitId}
-            sizes={[BannerAdSize.LEADERBOARD]}
+            sizes={[BannerAdSize.LARGE_BANNER ]}
             requestOptions={{
                 keywords: ["sports", "football"],
                 contentUrl: "",
