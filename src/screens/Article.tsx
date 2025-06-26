@@ -201,6 +201,7 @@ function Article() {
               {PubPage && PubPage.middle.display !== 0 && (
                 <View style={{ marginBottom: 10 }}>
                   <Banner
+                    pagetype="article"
                     darkMode={darkMode}
                     unitId={PubPage.middle.banner.id}
                   />
@@ -247,6 +248,7 @@ function Article() {
       <View style={styles.actionSection}>
         {PubPage && PubPage.footer.display !== 0 && (
           <BannerFooter
+            pagetype="article"
             darkMode={darkMode}
             unitId={PubPage.footer.banner.id}
           />

@@ -8,9 +8,30 @@ import {
 } from "react-native-google-mobile-ads";
 import mobileAds from "react-native-google-mobile-ads";
 import { AppConfig } from "../AppConfig";
-import { ThemeContext } from "../context/ThemeContext";
+
 // 🔁 Interstitial global (garde-le global)
-const INTERSTITIAL_UNIT_ID = "/49926454/madeinfoot>appli/une>topic>interstitiel";
+const INTERSTITIAL_UNIT_ID = "/49926454/madeinsupporter>appli/une>topic>interstitiel";
+const buildCustomTargeting = (unitId: string, pagetype: string = 'topic') => {
+  return {
+    ofts: [
+      'foot', 'sports', 'madeinfoot', 'ligue_1', '/sposts/divers',
+      'om', 'psg', 'asse', 'stade_rennais', 'fc_nantes', 'ligue_2',
+      'ligue_des_champions', 'equipe_de_france', 'monaco', 'losc',
+      'real_madrid', 'rc_lens', 'bordeaux', 'montpellier','television',
+      'coupe_du_monde','euro_football','ligue_des_champions','coupe_de_france_de_football'
+    ],
+    pagetype,
+    pos: getPosFromUnitId(unitId),
+    slotName: unitId,
+    device: 'smartphone',
+  };
+};
+
+const getPosFromUnitId = (unitId: string): string => {
+    const parts = unitId.split('>');
+    return parts[parts.length - 1] || '';
+};
+
 let interstitial = InterstitialAd.createForAdRequest(INTERSTITIAL_UNIT_ID, {
     requestNonPersonalizedAdsOnly: true,
     keywords: ["sports", "football"],
@@ -97,9 +118,10 @@ export const setupInterstitialListeners = (setInterstitialLoad?: (value: string)
 type BannerProps = {
     unitId: string;
     darkMode: boolean;
+    pagetype?: string;
 };
 
-export const Banner = ({ unitId, darkMode }: BannerProps) => (
+export const Banner = ({ unitId, darkMode, pagetype="topic" }: BannerProps) => (
     <View style={[styles.vertical2, {
         backgroundColor: AppConfig.BackGroundButton(darkMode),
         shadowColor: AppConfig.ShadowColor(darkMode),
@@ -110,12 +132,13 @@ export const Banner = ({ unitId, darkMode }: BannerProps) => (
             requestOptions={{
                 keywords: ["sports", "football"],
                 contentUrl: "",
+                customTargeting: buildCustomTargeting(unitId, pagetype),
             }}
         />
     </View>
 );
 
-export const BannerHeader = ({ unitId, darkMode }: BannerProps) => (
+export const BannerHeader = ({ unitId, darkMode, pagetype="topic" }: BannerProps) => (
     <View
         style={[
             styles.BannerHeader,
@@ -131,12 +154,13 @@ export const BannerHeader = ({ unitId, darkMode }: BannerProps) => (
             requestOptions={{
                 keywords: ["sports", "football"],
                 contentUrl: "",
+                customTargeting: buildCustomTargeting(unitId, pagetype),
             }}
         />
     </View>
 );
 
-export const BannerFooter = ({ unitId, darkMode }: BannerProps) => (
+export const BannerFooter = ({ unitId, darkMode, pagetype="topic" }: BannerProps) => (
     <View style={[styles.BannerFooter, {
         backgroundColor: AppConfig.BackGroundButton(darkMode),
         shadowColor: AppConfig.ShadowColor(darkMode),
@@ -147,6 +171,7 @@ export const BannerFooter = ({ unitId, darkMode }: BannerProps) => (
             requestOptions={{
                 keywords: ["sports", "football"],
                 contentUrl: "",
+                customTargeting: buildCustomTargeting(unitId, pagetype),
             }}
         />
     </View>

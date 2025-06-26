@@ -42,10 +42,7 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
 
   
   const toggleDay = (dayId: string) => {
-    const newSelectedDays = selectedDays.includes(dayId)
-      ? selectedDays.filter(id => id !== dayId)
-      : [...selectedDays, dayId];
-    
+    const newSelectedDays = [...[],dayId];
       if(newSelectedDays.length === 0){
         setSelectedDays([...[],weekdays[0].id]);
         onFilterChange([...[],weekdays[0].id]);

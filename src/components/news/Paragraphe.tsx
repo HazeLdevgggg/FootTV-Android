@@ -72,7 +72,7 @@ const Paragraphe = ({item} : {item:any}) => {
                 />
             )}
             {item.pub.display === 1 && (
-                <Banner unitId={item.pub.banner.id} darkMode={darkMode}/>
+                <Banner unitId={item.pub.banner.id} pagetype="article" darkMode={darkMode}/>
             )}
         </>
     )

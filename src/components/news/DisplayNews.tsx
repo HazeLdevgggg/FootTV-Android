@@ -3,7 +3,6 @@ import { View, StyleSheet, ScrollView, useWindowDimensions } from 'react-native'
 
 import WebView from 'react-native-webview';
 import { MyText, MyTextBold } from '../tags/MyText';
-import Settings from '../../constants/Settings';
 import Paragraphe from './Paragraphe';
 import MyImage from '../tags/MyImage';
 import LinearGradient from 'react-native-linear-gradient';
@@ -101,7 +100,7 @@ export default function InfoItem(props: ArticleDetail) {
             </View>
             <View>
                 {props.pub_article_bottom!=='' &&(
-                    <Banner unitId={props.pub_article_bottom} darkMode={darkMode}/>
+                    <Banner unitId={props.pub_article_bottom} pagetype="article" darkMode={darkMode}/>
                 )}    
             </View>
         </>

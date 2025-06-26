@@ -37,7 +37,7 @@ function Home() {
   const context = useContext(ThemeContext);
   const navigator = useTypedNavigation();
 
-  // To know which days are selected
+  // Pour gérer les jours sélectionnés
   const [DateHome, setDateHome] = useState<DateHomeType[]>([]);
   const [DateHomeFilter, setDateHomeFilter] = useState<DateHomeType[]>([]);
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
@@ -50,11 +50,22 @@ function Home() {
     EnCours: false,
   });
 
-  useEffect(() => {
+  // Nouvel état pour gérer l'affichage des pubs
+  const [showAds, setShowAds] = useState(false);
 
+  useEffect(() => {
+    // Exemple de logique pour afficher ou non la pub (à adapter)
+    const checkShowAds = () => {
+      // Par exemple, 50% de chances d'afficher la pub
+      return Math.random() > 0.5;
+    };
+    setShowAds(checkShowAds());
+  }, []);
+
+  useEffect(() => {
     if (!notificationsInitialized) {
       console.log("Init Notification");
-      setupNotifications(navigator, context); // 🔹 Passe la navigation ici
+      setupNotifications(navigator, context);
       notificationsInitialized = true;
     }
 
@@ -84,11 +95,13 @@ function Home() {
     };
     getChannel();
   }, []);
+
   if (isLoading) {
     return (
       <Loading />
     );
   }
+
   const MatchEnCours = (date: string, heure: string) => {
     console.log(date, heure);
     const [day, month, year] = date.split("/");
@@ -118,6 +131,7 @@ function Home() {
       layoutMeasurement.height + contentOffset.y >= contentSize.height - 20
     );
   };
+
   const GetNextPage = async () => {
     try {
       const response = await fetch(
@@ -137,7 +151,6 @@ function Home() {
       setNextPageLoading(false);
     }
   };
-
 
   const GetDayMatch = async (params: string[], favorisParams: string[]) => {
     setSelectedDays(params);
@@ -254,7 +267,7 @@ function Home() {
               }
             }}
           />
-          {PubPage && PubPage.top.display !== 0 && (
+          {showAds && PubPage && PubPage.top.display !== 0 && (
             <BannerHeader
               darkMode={darkMode}
               unitId={PubPage.top.banner.id}
@@ -275,76 +288,76 @@ function Home() {
                           emission.type === 'emission' ? (
                             <ItemListCard key={emission.id} {...emission} />
                           ) : (
-                            <Banner
-                              key={"bannerHomeMatch-" + index}
-                              darkMode={darkMode}
-                              unitId={
-                                emission.banner.id
-                              }
-                            />
+                            showAds && (
+                              <Banner
+                                key={"bannerHomeMatch-" + index}
+                                darkMode={darkMode}
+                                unitId={emission.banner.id}
+                              />
+                            )
                           )
                         ))) : (
-                        <Empty title="Aucun Match trouvé" subtitle="Modifiez les filtres ou sélectionnez une autre date" icon="football-outline" color="#3f96ee" />
+                        <Empty
+                          title="Aucun Match trouvé"
+                          subtitle="Modifiez les filtres ou sélectionnez une autre date"
+                          icon="football-outline"
+                          color="#3f96ee"
+                        />
                       )}
                     </React.Fragment>
                   </View>
                 ))
               ) : (
                 ItemList.length > 0 ? (
-                  ItemList.map((item, index) => (
+                  ItemList.map((item, index) =>
                     item.type === 'emission' ? (
                       <ItemListCard key={item.id} {...item} />
                     ) : (
-                      <Banner
-                        key={"bannerHomeMatch-" + index}
-                        darkMode={darkMode}
-                        unitId={
-                          item.banner.id
-                        }
-                      />
+                      showAds && (
+                        <Banner
+                          key={"bannerHomeMatch-" + index}
+                          darkMode={darkMode}
+                          unitId={item.banner.id}
+                        />
+                      )
                     )
-                  ))
+                  )
                 ) : (
-                  <Empty title="Aucun Match trouvé" subtitle="Modifiez les filtres ou pour une recherche plus précise allez sur la page recherche" icon="football-outline" color="#3f96ee" />
+                  <Empty
+                    title="Aucun Match trouvé"
+                    subtitle="Modifiez les filtres ou pour une recherche plus précise allez sur la page recherche"
+                    icon="football-outline"
+                    color="#3f96ee"
+                  />
                 )
               )
             )}
           </View>
-          {PubPage.middle.display !== 0 && (
+
+          {showAds && PubPage && PubPage.middle.display !== 0 && (
             <View style={{ marginHorizontal: 12 }}>
-              <Banner
-                darkMode={darkMode}
-                unitId={PubPage.middle.banner.id}
-              />
+              <Banner darkMode={darkMode} unitId={PubPage.middle.banner.id} />
             </View>
           )}
+
           <SectionDivider
             icon="trending-up-outline"
             label="Les dernières infos média & people foot"
           />
           <View style={{ marginHorizontal: 12 }}>
             {Array.isArray(Article) &&
-              Article
-                .filter(item => item.id && item.titre)
-                .map((item, index) => (
-                  <ArticleListCard
-                    key={"home-article-" + item.id}
-                    {...item}
-                  />
-                ))
-            }
+              Article.filter((item) => item.id && item.titre).map((item) => (
+                <ArticleListCard key={"home-article-" + item.id} {...item} />
+              ))}
           </View>
         </View>
-        {NextPageLoading && (
-          <Loading />
-        )}
+
+        {NextPageLoading && <Loading />}
       </ScrollView>
+
       <View style={styles.actionSection}>
-        {PubPage.footer.display !== 0 && (
-          <BannerFooter
-            darkMode={darkMode}
-            unitId={PubPage.footer.banner.id}
-          />
+        {showAds && PubPage && PubPage.footer.display !== 0 && (
+          <BannerFooter darkMode={darkMode} unitId={PubPage.footer.banner.id} />
         )}
       </View>
     </View>
@@ -352,57 +365,18 @@ function Home() {
 }
 
 const styles = StyleSheet.create({
-  horizontal: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 8,
-    backgroundColor: "#f8f9fa",
-    borderRadius: 10,
-    marginBottom: 6,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-  },
   vertical: {
+    marginTop: Platform.OS === "ios" ? 50 : 10,
     flexDirection: "column",
-    flex: 1,
-  },
-  titreText: {
-    fontSize: 13,
-    fontWeight: "600",
-    marginBottom: 8,
-    marginTop: 8,
-  },
-  descText: {
-    color: "gray",
-    fontSize: 11,
-  },
-  dividerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 12,
-    marginTop: 8,
-    marginBottom: 8,
-  },
-  dividerText: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#3f96ee",
-  },
-  dividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: "#3f96ee",
-    marginLeft: 8,
-    opacity: 0.4,
   },
   actionSection: {
-    position: 'absolute',
+    marginTop: 10,
+    position: "absolute",
     bottom: 0,
-    left: 0,
-    right: 0,
+    width: "100%",
+    flexDirection: "row",
+    backgroundColor: "#000000",
   },
 });
+
 export default Home;
