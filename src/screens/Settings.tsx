@@ -24,7 +24,7 @@ function Settings() {
     try {
       const response = await fetch(
         `${AppConfig.API_BASE_URL}${routes.ProfileUpdate}?apikey=${AppConfig.API_Key}&etat=${
-          notification_emission === "1" ? 1 : 0
+          notification_emission === "1" ? 0 : 1
         }&type=notification-emission&profil=${profil_id}`
       );
       const data = await response.json();
@@ -40,7 +40,7 @@ function Settings() {
     try {
       const response = await fetch(
         `${AppConfig.API_BASE_URL}${routes.ProfileUpdate}?apikey=${AppConfig.API_Key}&etat=${
-          notification_info === "1" ? 1 : 0
+          notification_info === "1" ? 0 : 1
         }&type=notification-info&profil=${profil_id}`
       );
       const data = await response.json();
@@ -75,7 +75,7 @@ function Settings() {
           </Text>
           <Switch
             trackColor={{ false: "#767577", true: "#3f96ee" }}
-            thumbColor={notification_emission === "1" ? "white" : "white"}
+            thumbColor={"white"}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitchMatch}
             value={notification_emission === "1"}
@@ -103,7 +103,7 @@ function Settings() {
           </Text>
           <Switch
             trackColor={{ false: "#767577", true: "#3f96ee" }}
-            thumbColor={notification_emission === "1" ? "white" : "white"}
+            thumbColor={"white"}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitchArticle}
             value={notification_info === "1"}
@@ -168,7 +168,7 @@ function Settings() {
         </View>
         <View style={styles.horizontal2}>
           <View style={[styles.featureCard, { backgroundColor: AppConfig.BackGroundButton(darkMode),width:'100%' }]}>
-            <TouchableOpacity onPress={() => navigation.push("LegalMention")}>
+            <TouchableOpacity onPress={() => {navigation.push("LegalMention")}}>
               <View style={styles.featureHeader}>
                 <Ionicons name="document-text-outline" size={24} color="#4CAF50" />
                 <Text style={[styles.featureTitle, { color: AppConfig.MainTextColor(darkMode) }]}>

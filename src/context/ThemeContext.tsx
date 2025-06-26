@@ -133,7 +133,7 @@ export const ThemeProvider = ({ children }) => {
 
     if (!savedProfil) {
       try {
-        const res = await fetch(`${AppConfig.API_BASE_URL}${routes.Profile}?apikey=${AppConfig.API_Key}&profil=0&site=300&version=3.0&plateform=${os}`);
+        const res = await fetch(`${AppConfig.API_BASE_URL}${routes.Profile}?apikey=${AppConfig.API_Key}&profil=0&site=300&version=3.0&plateform=${os}&rand=${Math.random()}`);
         const json = await res.json();
         await setProfil_id(json.profil.id);
         console.log("✔️ Nouveau profil ID créé :", json.profil.id);
@@ -142,7 +142,7 @@ export const ThemeProvider = ({ children }) => {
       }
     } else {
       try {
-        await fetch(`${AppConfig.API_BASE_URL}${routes.Profile}?apikey=${AppConfig.API_Key}&profil=${savedProfil}&site=300&version=3.0&plateform=${os}`);
+        await fetch(`${AppConfig.API_BASE_URL}${routes.Profile}?apikey=${AppConfig.API_Key}&profil=${savedProfil}&site=300&version=3.0&plateform=${os}&rand=${Math.random()}`);
         setProfil_id(savedProfil);
         console.log("✅ Profil ID existant validé :", savedProfil);
       } catch (e) {

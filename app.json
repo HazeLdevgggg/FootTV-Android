@@ -55,7 +55,8 @@
           "androidAppId": "ca-app-pub-2464230562981596~3151854479",
           "iosAppId": "ca-app-pub-2464230562981596~9871637074"
         }
-      ]
+      ],
+      "expo-asset"
     ]
   }
 }
