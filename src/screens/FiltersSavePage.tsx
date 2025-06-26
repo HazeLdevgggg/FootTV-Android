@@ -16,7 +16,6 @@ function FiltersSavePage() {
     const { darkMode, filters, setFilters, setEditID, editID } = useContext(ThemeContext);
     const [searchText, setSearchText] = useState('');
 
-    // Initialiser seulement au premier rendu
     useEffect(() => {
         if (filters.length === 0) {
             setFilters(filters);
@@ -31,10 +30,7 @@ function FiltersSavePage() {
     const handleDeleteCategory = (id: string) => {
         const updatedList = filters.filter(cat => cat.id !== id);
         setFilters(updatedList);
-        // Sortir du mode édition si on supprime la carte en cours d'édition
-        if (editID === id) {
-            setEditID("");
-        }
+        if (editID === id) setEditID("");
     };
 
     const isFilterEmpty = (type: FiltersType) => {
@@ -51,33 +47,21 @@ function FiltersSavePage() {
     };
 
     const handleUpdateField = (categoryId: string, field: string, value: string) => {
-        console.log("categoryId", categoryId);
         let updatedCategories = filters.map(cat => {
             if (cat.id !== categoryId) return cat;
-
             const updated = { ...cat, [field]: value };
-
-            // Si on vide un ID, on vide aussi le nom lisible correspondant
             if (field === 'CompetitionID') updated.Competition = '';
             if (field === 'ClubID') updated.Club = '';
             if (field === 'ChannelID') updated.Channel = '';
-
             return updated;
         });
 
         const updatedCategory = updatedCategories.find(cat => cat.id === categoryId);
-        console.log("Handle");
-        console.log(updatedCategory);
         if (updatedCategory && isFilterEmpty(updatedCategory)) {
-            console.log("On va le supprimer");
             updatedCategories = updatedCategories.filter(cat => cat.id !== categoryId);
             setFilters(updatedCategories);
-            if (editID === categoryId) {
-                console.log("On va le supprimer2");
-                setEditID("");
-            }
+            if (editID === categoryId) setEditID("");
         } else {
-            console.log("On va le mettre à jour");
             setFilters(updatedCategories);
             setEditID(categoryId);
         }
@@ -96,184 +80,20 @@ function FiltersSavePage() {
                 },
             ]}
         >
-
-            {/* Contenu des informations */}
-
             <View style={styles.cardContent}>
-
                 <View style={styles.infoRow}>
                     <Text style={[styles.infoText, { color: AppConfig.MainTextColor(darkMode) }]} numberOfLines={1}>
                         {"Nom : " + category.name}
                     </Text>
                 </View>
-                {category.search !== "" && (
-                    <View style={styles.infoRow}>
-                        {editID === category.id && (
-                            <TouchableOpacity
-                                style={styles.deleteButton}
-                                onPress={() => handleUpdateField(category.id, 'search', '')}
-                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            >
-                                <View style={[styles.iconContainer, { backgroundColor: "#FFFFFF" + "20" }]}>
-                                    <Ionicons name="close-outline" size={20} color="#FFFFFF" />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                        <View style={[styles.iconContainer, { backgroundColor: "#eea1cd" + "20" }]}>
-                            <Ionicons name="search-outline" size={14} color="#eea1cd" />
-                        </View>
-                        <Text style={[styles.infoText, { color: AppConfig.MainTextColor(darkMode) }]} numberOfLines={1}>
-                            {category.search}
-                        </Text>
-                    </View>
-                )}
-                {category.date !== "" && (
-                    <View style={styles.infoRow}>
-                        {editID === category.id && (
-                            <TouchableOpacity
-                                style={styles.deleteButton}
-                                onPress={() => handleUpdateField(category.id, 'date', '')}
-                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            >
-                                <View style={[styles.iconContainer, { backgroundColor: "#FFFFFF" + "20" }]}>
-                                    <Ionicons name="close-outline" size={20} color="#FFFFFF" />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                        <View style={[styles.iconContainer, { backgroundColor: "#FFD166" + "20" }]}>
-                            <Ionicons name="calendar-outline" size={14} color="#FFD166" />
-                        </View>
-                        <Text style={[styles.infoText, { color: AppConfig.MainTextColor(darkMode) }]} numberOfLines={1}>
-                            {DateToStringUI(category.date)}
-                        </Text>
-                    </View>
-                )}
-                {category.Competition !== "" && (
-                    <View style={styles.infoRow}>
-                        {editID === category.id && (
-                            <TouchableOpacity
-                                style={styles.deleteButton}
-                                onPress={() => handleUpdateField(category.id, 'CompetitionID', '')}
-                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            >
-                                <View style={[styles.iconContainer, { backgroundColor: "#FFFFFF" + "20" }]}>
-                                    <Ionicons name="close-outline" size={20} color="#FFFFFF" />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                        <View style={[styles.iconContainer, { backgroundColor: "#EF476F" + "20" }]}>
-                            <Ionicons name="trophy-outline" size={14} color="#EF476F" />
-                        </View>
-                        <Text style={[styles.infoText, { color: AppConfig.MainTextColor(darkMode) }]} numberOfLines={1}>
-                            {category.Competition}
-                        </Text>
-                    </View>
-                )}
-                {category.Club !== "" && (
-                    <View style={styles.infoRow}>
-                        {editID === category.id && (
-                            <TouchableOpacity
-                                style={styles.deleteButton}
-                                onPress={() => handleUpdateField(category.id, 'ClubID', '')}
-                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            >
-                                <View style={[styles.iconContainer, { backgroundColor: "#FFFFFF" + "20" }]}>
-                                    <Ionicons name="close-outline" size={20} color="#FFFFFF" />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                        <View style={[styles.iconContainer, { backgroundColor: "#06D6A0" + "20" }]}>
-                            <Ionicons name="football-outline" size={14} color="#06D6A0" />
-                        </View>
-                        <Text style={[styles.infoText, { color: AppConfig.MainTextColor(darkMode) }]} numberOfLines={1}>
-                            {category.Club}
-                        </Text>
-                    </View>
-                )}
-                {category.Channel !== "" && (
-                    <View style={styles.infoRow}>
-                        {editID === category.id && (
-                            <TouchableOpacity
-                                style={styles.deleteButton}
-                                onPress={() => handleUpdateField(category.id, 'ChannelID', '')}
-                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            >
-                                <View style={[styles.iconContainer, { backgroundColor: "#FFFFFF" + "20" }]}>
-                                    <Ionicons name="close-outline" size={20} color="#FFFFFF" />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                        <View style={[styles.iconContainer, { backgroundColor: "#118AB2" + "20" }]}>
-                            <Ionicons name="tv-outline" size={14} color="#118AB2" />
-                        </View>
-                        <Text style={[styles.infoText, { color: AppConfig.MainTextColor(darkMode) }]} numberOfLines={1}>
-                            {category.Channel}
-                        </Text>
-                    </View>
-                )}
-                {category.EnCours === "1" && (
-                    <View style={styles.infoRow}>
-                        {editID === category.id && (
-                            <TouchableOpacity
-                                style={styles.deleteButton}
-                                onPress={() => handleUpdateField(category.id, 'EnCours', '0')}
-                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            >
-                                <View style={[styles.iconContainer, { backgroundColor: "#FFFFFF" + "20" }]}>
-                                    <Ionicons name="close-outline" size={20} color="#FFFFFF" />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                        <View style={[styles.iconContainer, { backgroundColor: "#F78C6B" + "20" }]}>
-                            <Ionicons name="pulse-outline" size={14} color="#F78C6B" />
-                        </View>
-                        <Text style={[styles.infoText, { color: AppConfig.MainTextColor(darkMode) }]} numberOfLines={1}>
-                            {"En cours"}
-                        </Text>
-                    </View>
-                )}
-                {category.CeSoir === "1" && (
-                    <View style={styles.infoRow}>
-                        {editID === category.id && (
-                            <TouchableOpacity
-                                style={styles.deleteButton}
-                                onPress={() => handleUpdateField(category.id, 'CeSoir', '0')}
-                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            >
-                                <View style={[styles.iconContainer, { backgroundColor: "#FFFFFF" + "20" }]}>
-                                    <Ionicons name="close-outline" size={20} color="#FFFFFF" />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                        <View style={[styles.iconContainer, { backgroundColor: "#F4A261" + "20" }]}>
-                            <Ionicons name="moon-outline" size={14} color="#F4A261" />
-                        </View>
-                        <Text style={[styles.infoText, { color: AppConfig.MainTextColor(darkMode) }]} numberOfLines={1}>
-                            {"Ce soir"}
-                        </Text>
-                    </View>
-                )}
-                {category.EnDirect === "1" && (
-                    <View style={styles.infoRow}>
-                        {editID === category.id && (
-                            <TouchableOpacity
-                                style={styles.deleteButton}
-                                onPress={() => handleUpdateField(category.id, 'EnDirect', '0')}
-                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            >
-                                <View style={[styles.iconContainer, { backgroundColor: "#FFFFFF" + "20" }]}>
-                                    <Ionicons name="close-outline" size={20} color="#FFFFFF" />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                        <View style={[styles.iconContainer, { backgroundColor: "#D72631" + "20" }]}>
-                            <Ionicons name="radio-outline" size={14} color="#D72631" />
-                        </View>
-                        <Text style={[styles.infoText, { color: AppConfig.MainTextColor(darkMode) }]} numberOfLines={1}>
-                            {"En Direct"}
-                        </Text>
-                    </View>
-                )}
+                {renderField(category, "search", category.search, "search-outline", "#eea1cd")}
+                {renderField(category, "date", category.date && DateToStringUI(category.date), "calendar-outline", "#FFD166")}
+                {renderField(category, "CompetitionID", category.Competition, "trophy-outline", "#EF476F")}
+                {renderField(category, "ClubID", category.Club, "football-outline", "#06D6A0")}
+                {renderField(category, "ChannelID", category.Channel, "tv-outline", "#118AB2")}
+                {renderField(category, "EnCours", category.EnCours === "1" && "En cours", "pulse-outline", "#F78C6B")}
+                {renderField(category, "CeSoir", category.CeSoir === "1" && "Ce soir", "moon-outline", "#F4A261")}
+                {renderField(category, "EnDirect", category.EnDirect === "1" && "En Direct", "radio-outline", "#D72631")}
             </View>
             <View style={styles.deleteRow}>
                 <TouchableOpacity
@@ -298,68 +118,73 @@ function FiltersSavePage() {
         </View>
     );
 
-    const renderCategoryGrid = () => {
-        const pairs: FiltersType[][] = [];
-        for (let i = 0; i < filters.length; i += 2) {
-            pairs.push(filters.slice(i, i + 2));
-        }
-
-        if (filters.length > 0) {
-            return pairs.map((pair, pairIndex) => (
-                <View key={`category-pair-${pairIndex}`}>
-                    <View style={{ marginBottom: 10 }}>
-                        <Search placeholder="Cherchez dans vos filtres" SearchFilter={(text) => setSearchText(text)} Value={searchText} />
-                    </View>
-                    <View key={`category-pair-${pairIndex}`} style={styles.categoryRow}>
-                        {pair.map((category, index) => renderCategoryCard(category, index))}
-                        {pair.length === 1 && <View style={styles.categoryCardPlaceholder} />}
-                    </View>
+    const renderField = (category: FiltersType, field: string, content: string | boolean, icon: any, color: string) => {
+        if (!content) return null;
+        return (
+            <View style={styles.infoRow}>
+                {editID === category.id && (
+                    <TouchableOpacity
+                        style={styles.deleteButton}
+                        onPress={() => handleUpdateField(category.id, field, field.includes("ID") ? "" : "0")}
+                        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                    >
+                        <View style={[styles.iconContainer, { backgroundColor: "#FFFFFF20" }]}>
+                            <Ionicons name="close-outline" size={20} color="#FFFFFF" />
+                        </View>
+                    </TouchableOpacity>
+                )}
+                <View style={[styles.iconContainer, { backgroundColor: color + "20" }]}>
+                    <Ionicons name={icon} size={14} color={color} />
                 </View>
-            ));
-        } else {
-            return (
-                <Empty title="Aucun filtre trouvé" subtitle="Ajoutez vos filtres pour ne plus rien rater" icon="search-outline" color="#4ECDC4" />
-            );
-        }
+                <Text style={[styles.infoText, { color: AppConfig.MainTextColor(darkMode) }]} numberOfLines={1}>
+                    {content}
+                </Text>
+            </View>
+        );
     };
 
-    const renderSearchGrid = () => {
-        const filtered = [...filters].sort(
-            (a, b) =>
-                levenshteinDistance(a.name.toLowerCase(), searchText.toLowerCase()) -
-                levenshteinDistance(b.name.toLowerCase(), searchText.toLowerCase())
-        );
+    const getFilteredPairs = () => {
+        const filtered = [...filters].sort((a, b) =>
+            levenshteinDistance(a.name.toLowerCase(), searchText.toLowerCase()) -
+            levenshteinDistance(b.name.toLowerCase(), searchText.toLowerCase())
+        )
+
         const pairs: FiltersType[][] = [];
         for (let i = 0; i < filtered.length; i += 2) {
             pairs.push(filtered.slice(i, i + 2));
         }
-        if (filtered.length > 0) {
-            return pairs.map((pair, pairIndex) => (
-                <View key={`category-pair-${pairIndex}`}>
-                    <View style={{ marginBottom: 10 }}>
-                        <Search placeholder="Cherchez dans vos filtres" SearchFilter={(text) => setSearchText(text)} Value={searchText} />
-                    </View>
-                    <View key={`category-pair-${pairIndex}`} style={styles.categoryRow}>
-                        {pair.map((category, index) => renderCategoryCard(category, index))}
-                        {pair.length === 1 && <View style={styles.categoryCardPlaceholder} />}
-                    </View>
-                </View>
-            ));
-        } else {
+        return pairs;
+    };
+
+    const renderCategoryGrid = () => {
+        const pairs = getFilteredPairs();
+
+        if (pairs.length === 0) {
             return (
                 <Empty title="Aucun filtre trouvé" subtitle="Ajoutez vos filtres pour ne plus rien rater" icon="search-outline" color="#4ECDC4" />
             );
         }
+
+        return pairs.map((pair, pairIndex) => (
+            <View key={`category-pair-${pairIndex}`} style={styles.categoryRow}>
+                {pair.map((category, index) => renderCategoryCard(category, index))}
+                {pair.length === 1 && <View style={styles.categoryCardPlaceholder} />}
+            </View>
+        ));
     };
 
     return (
         <View style={[styles.container, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
             <ScreenHeader color="#4ECDC4" name="Vos Filtres" icon="search-outline" />
-
-            <ScrollView showsVerticalScrollIndicator={false} >
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.content}>
                     <SectionDivider icon="apps-outline" label="Liste des filtres" />
-                    <View style={[styles.categoriesContainer]}>{searchText.length > 0 ? renderSearchGrid() : renderCategoryGrid()}</View>
+                    <View style={{ marginBottom: 16, marginHorizontal: 12 }}>
+                        <Search placeholder="Cherchez dans vos filtres" SearchFilter={setSearchText} Value={searchText} />
+                    </View>
+                    <View style={styles.categoriesContainer}>
+                        {renderCategoryGrid()}
+                    </View>
                 </View>
             </ScrollView>
         </View>
@@ -369,7 +194,7 @@ function FiltersSavePage() {
 const styles = StyleSheet.create({
     container: { flex: 1 },
     content: { paddingBottom: 50 },
-    categoriesContainer: { paddingHorizontal: 16, marginBottom: 0 },
+    categoriesContainer: { paddingHorizontal: 16 },
     categoryRow: { flexDirection: "row", marginBottom: 16, justifyContent: "space-between" },
     categoryCard: {
         flex: 1,
@@ -390,8 +215,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
-    // Contenu de la carte
     cardContent: {
         marginTop: 20,
         paddingHorizontal: 16,
@@ -424,7 +247,6 @@ const styles = StyleSheet.create({
         flex: 1,
         lineHeight: 18,
     },
-
 });
 
 export default FiltersSavePage;
