@@ -111,81 +111,7 @@ function Discover() {
                     { backgroundColor: AppConfig.BackgroundColor(darkMode) },
                 ]}
             >
-                <SectionDivider icon="stats-chart-outline" label="Stats" />
-                <View
-                    style={[
-                        styles.statsContainer,
-                        {
-                            backgroundColor: AppConfig.BackGroundButton(darkMode),
-                        },
-                    ]}
-                >
-                    <View style={styles.statItem}>
-                        <View style={styles.statIconContainer}>
-                            <Ionicons name="trophy" size={24} color="#FFD700" />
-                        </View>
-                        <Text
-                            style={[
-                                styles.statNumber,
-                                { color: AppConfig.MainTextColor(darkMode) },
-                            ]}
-                        >
-                            {AppConfig.Competition_Number}
-                        </Text>
-                        <Text
-                            style={[
-                                styles.statLabel,
-                                { color: AppConfig.SecondaryTextColor(darkMode) },
-                            ]}
-                        >
-                            Ligues
-                        </Text>
-                    </View>
-                    <View style={styles.statDivider} />
-                    <View style={styles.statItem}>
-                        <View style={styles.statIconContainer}>
-                            <Ionicons name="tv" size={24} color="#3f96ee" />
-                        </View>
-                        <Text
-                            style={[
-                                styles.statNumber,
-                                { color: AppConfig.MainTextColor(darkMode) },
-                            ]}
-                        >
-                            {AppConfig.Channel_Number}
-                        </Text>
-                        <Text
-                            style={[
-                                styles.statLabel,
-                                { color: AppConfig.SecondaryTextColor(darkMode) },
-                            ]}
-                        >
-                            Chaînes
-                        </Text>
-                    </View>
-                    <View style={styles.statDivider} />
-                    <View style={styles.statItem}>
-                        <View style={styles.statIconContainer}>
-                            <Ionicons name="people" size={24} color="#28a745" />
-                        </View>
-                        <Text
-                            style={[
-                                styles.statNumber,
-                                { color: AppConfig.MainTextColor(darkMode) },
-                            ]}
-                        >
-                            {AppConfig.Club_Number}
-                        </Text>
-                        <Text
-                            style={[
-                                styles.statLabel,
-                                { color: AppConfig.SecondaryTextColor(darkMode) },
-                            ]}
-                        >
-                            Clubs
-                        </Text>
-                    </View>
-                </View>
+
 
                 <SectionDivider icon="apps-outline" label="Catégories" />
                 <View style={styles.categoriesContainer}>
@@ -283,6 +209,81 @@ function Discover() {
                         </TouchableOpacity>
                     </View>
 
+                </View>
+                <SectionDivider icon="stats-chart-outline" label="Stats" />
+                <View
+                    style={[
+                        styles.statsContainer,
+                        {
+                            backgroundColor: AppConfig.BackGroundButton(darkMode),
+                        },
+                    ]}
+                >
+                    <View style={styles.statItem}>
+                        <View style={styles.statIconContainer}>
+                            <Ionicons name="trophy" size={24} color="#FFD700" />
+                        </View>
+                        <Text
+                            style={[
+                                styles.statNumber,
+                                { color: AppConfig.MainTextColor(darkMode) },
+                            ]}
+                        >
+                            {AppConfig.Competition_Number}
+                        </Text>
+                        <Text
+                            style={[
+                                styles.statLabel,
+                                { color: AppConfig.SecondaryTextColor(darkMode) },
+                            ]}
+                        >
+                            Ligues
+                        </Text>
+                    </View>
+                    <View style={styles.statDivider} />
+                    <View style={styles.statItem}>
+                        <View style={styles.statIconContainer}>
+                            <Ionicons name="tv" size={24} color="#3f96ee" />
+                        </View>
+                        <Text
+                            style={[
+                                styles.statNumber,
+                                { color: AppConfig.MainTextColor(darkMode) },
+                            ]}
+                        >
+                            {AppConfig.Channel_Number}
+                        </Text>
+                        <Text
+                            style={[
+                                styles.statLabel,
+                                { color: AppConfig.SecondaryTextColor(darkMode) },
+                            ]}
+                        >
+                            Chaînes
+                        </Text>
+                    </View>
+                    <View style={styles.statDivider} />
+                    <View style={styles.statItem}>
+                        <View style={styles.statIconContainer}>
+                            <Ionicons name="people" size={24} color="#28a745" />
+                        </View>
+                        <Text
+                            style={[
+                                styles.statNumber,
+                                { color: AppConfig.MainTextColor(darkMode) },
+                            ]}
+                        >
+                            {AppConfig.Club_Number}
+                        </Text>
+                        <Text
+                            style={[
+                                styles.statLabel,
+                                { color: AppConfig.SecondaryTextColor(darkMode) },
+                            ]}
+                        >
+                            Clubs
+                        </Text>
+                    </View>
                 </View>
             </View>
         </ScrollView>

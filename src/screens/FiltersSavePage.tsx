@@ -125,7 +125,7 @@ function FiltersSavePage() {
                 {editID === category.id && (
                     <TouchableOpacity
                         style={styles.deleteButton}
-                        onPress={() => handleUpdateField(category.id, field, field.includes("ID") ? "" : "0")}
+                        onPress={() => handleUpdateField(category.id, field, field === "EnCours" || field === "CeSoir" || field === "EnDirect" ? "0" : "")}
                         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                     >
                         <View style={[styles.iconContainer, { backgroundColor: "#FFFFFF20" }]}>

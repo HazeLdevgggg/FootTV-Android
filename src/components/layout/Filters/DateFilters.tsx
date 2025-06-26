@@ -38,7 +38,7 @@ function DateFilters({
         <DateTimePicker
           value={selectedTime}
           mode="date"
-          display={Platform.OS === "ios" ? "spinner" : "default"}
+          display={"default"}
           themeVariant={darkMode ? "dark" : "light"}
           locale="fr-FR"
           onChange={(event, date) => {

@@ -357,7 +357,6 @@ function Home() {
 
 const styles = StyleSheet.create({
   vertical: {
-    marginTop: Platform.OS === "ios" ? 50 : 10,
     flexDirection: "column",
   },
   actionSection: {
