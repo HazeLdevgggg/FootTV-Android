@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { AppConfig } from "../../../AppConfig";
-import DatePickerModal from "../DatePickerModal";
 import CloseIcon from "./CloseIcon";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 function DateFilters({
   onFilterChange,
@@ -34,23 +34,26 @@ function DateFilters({
 
   return (
     <>
-      <DatePickerModal
-        isVisible={showPicker}
-        selectedTime={selectedTime}
-        onClose={() => setShowPicker(false)}
-        onConfirm={(date) => {
-          setSelectedTime(date);
-          setShowPicker(false);
-          onFilterChange?.(DateToString(date));
-          console.log("Selected date:", DateToString(date));
-        }}
-        onReset={() => {
-          setSelectedTime(new Date()); // Optionnel : reset à la date du jour ou autre valeur par défaut
-          setShowPicker(false);
-          onFilterChange?.(""); // Toujours chaîne vide quand on reset
-          console.log("Reset date:", "");
-        }}
-      />
+      {showPicker && (
+        <DateTimePicker
+          value={selectedTime}
+          mode="date"
+          display={Platform.OS === "ios" ? "spinner" : "default"}
+          themeVariant={darkMode ? "dark" : "light"}
+          locale="fr-FR"
+          onChange={(event, date) => {
+            if (event.type === "dismissed") {
+              setShowPicker(false);
+              return;
+            }
+            if (event.type === "set" && date) {
+              setShowPicker(false);
+              setSelectedTime(date);
+              onFilterChange(DateToString(date));
+            }
+          }}
+        />
+      )}
       <View
         style={[
           styles.horizontal,
@@ -88,7 +91,6 @@ function DateFilters({
                 setSelectedTime(new Date());
                 setShowPicker(false);
                 onFilterChange?.("");
-                console.log("Reset date:", "");
               }} />
             )}
           </View>

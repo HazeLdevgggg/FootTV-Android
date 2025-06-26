@@ -9,6 +9,10 @@ import {
 import { ThemeContext } from "../../context/ThemeContext";
 import { AppConfig } from "../../AppConfig";
 import DateToUI from "../../functions/DateToUI";
+import Icon from "@expo/vector-icons/FontAwesome";
+import { Ionicons } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Platform } from "react-native";
 interface WeekdayFilterProps {
   onFilterChange: (selectedDays: string[]) => void;
 }
@@ -17,12 +21,15 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
   const { darkMode } = useContext(ThemeContext);
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [weekdays, setWeekdays] = useState<{ short: string, full: string, id: string }[]>([]);
+  const [more, setMore] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
+  const [dateMore, setDateMore] = useState<string>("");
 
   useEffect(() => {
     const newWeekdays = [];
     let number = 0;
     let counter = 0;
-  
+
     while (number < 7) {
       const date = new Date(Date.now() + counter);
       const year = date.getFullYear();
@@ -35,26 +42,30 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
       number++;
       counter += 24 * 3600 * 1000;
     }
-  
+
     setWeekdays(newWeekdays);
     setSelectedDays([...selectedDays, newWeekdays[0].id]);
   }, []);
 
-  
+
   const toggleDay = (dayId: string) => {
-    const newSelectedDays = [...[],dayId];
-      if(newSelectedDays.length === 0){
-        setSelectedDays([...[],weekdays[0].id]);
-        onFilterChange([...[],weekdays[0].id]);
-      }else{
-        setSelectedDays(newSelectedDays);
-        onFilterChange(newSelectedDays);
-      }
+    if(more){
+      setDateMore("")
+      setMore(false)
+    }
+    const newSelectedDays = [...[], dayId];
+    if (newSelectedDays.length === 0) {
+      setSelectedDays([...[], weekdays[0].id]);
+      onFilterChange([...[], weekdays[0].id]);
+    } else {
+      setSelectedDays(newSelectedDays);
+      onFilterChange(newSelectedDays);
+    }
   };
 
   const clearAll = () => {
-    setSelectedDays([...[],weekdays[0].id]);
-    onFilterChange([...[],weekdays[0].id]);
+    setSelectedDays([...[], weekdays[0].id]);
+    onFilterChange([...[], weekdays[0].id]);
   };
 
   const selectAll = () => {
@@ -63,7 +74,39 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
     onFilterChange(allDays);
   };
 
+  const DateToString = (date: Date) => {
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  };
+
   return (
+    <>
+    {showPicker && (
+      <DateTimePicker
+        value={new Date()}
+        mode="date"
+        display={Platform.OS === "ios" ? "spinner" : "default"}
+        themeVariant={darkMode ? "dark" : "light"}
+        locale="fr-FR"
+        onChange={(event, date) => {
+          if (event.type === "dismissed") {
+            setShowPicker(false);
+            setMore(false);
+            setDateMore("");
+            clearAll();
+            return;
+          }
+          if (event.type === "set" && date) {
+            setShowPicker(false);
+            setMore(true);  
+            toggleDay(DateToString(date));
+            setDateMore(DateToString(date));
+          }
+        }}
+      />
+    )}
     <View style={styles.container}>
       {/* Header avec actions */}
       <View style={styles.header}>
@@ -85,15 +128,15 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
       </View>
 
       {/* Grille des jours */}
-      <ScrollView 
-        horizontal 
+      <ScrollView
+        horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.daysContainer}
       >
         {weekdays.map((day, index) => {
           const isSelected = selectedDays.includes(day.id);
           const isWeekend = day.id === 'saturday' || day.id === 'sunday';
-          
+
           return (
             <TouchableOpacity
               key={day.id}
@@ -101,12 +144,12 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
               style={[
                 styles.dayButton,
                 {
-                  backgroundColor: isSelected 
+                  backgroundColor: isSelected
                     ? (isWeekend ? AppConfig.BackGroundButton(darkMode) : "#3f96ee")
                     : AppConfig.BackGroundButton(darkMode),
                   shadowColor: AppConfig.ShadowColor(darkMode),
-                  borderColor: isSelected 
-                    ? (isWeekend ? AppConfig.BackGroundButton(darkMode)  : "#3f96ee")
+                  borderColor: isSelected
+                    ? (isWeekend ? AppConfig.BackGroundButton(darkMode) : "#3f96ee")
                     : "transparent",
                 }
               ]}
@@ -115,8 +158,8 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
               <Text style={[
                 styles.dayShort,
                 {
-                  color: isSelected 
-                    ? "white" 
+                  color: isSelected
+                    ? "white"
                     : AppConfig.MainTextColor(darkMode),
                   fontWeight: isSelected ? "700" : "600"
                 }
@@ -126,8 +169,8 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
               <Text style={[
                 styles.dayFull,
                 {
-                  color: isSelected 
-                    ? "rgba(255,255,255,0.9)" 
+                  color: isSelected
+                    ? "rgba(255,255,255,0.9)"
                     : AppConfig.SecondaryTextColor(darkMode),
                   fontWeight: isSelected ? "600" : "500"
                 }
@@ -137,8 +180,8 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
               <Text style={[
                 styles.dayFull,
                 {
-                  color: isSelected 
-                    ? "rgba(255,255,255,0.9)" 
+                  color: isSelected
+                    ? "rgba(255,255,255,0.9)"
                     : AppConfig.SecondaryTextColor(darkMode),
                   fontWeight: isSelected ? "600" : "500"
                 }
@@ -148,8 +191,52 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
             </TouchableOpacity>
           );
         })}
+        <TouchableOpacity
+          key={"More"}
+          onPress={() => setShowPicker(true)}
+          style={[
+            styles.dayButton,
+            {
+              backgroundColor: more
+                ? (false ? AppConfig.BackGroundButton(darkMode) : "#3f96ee")
+                : AppConfig.BackGroundButton(darkMode),
+              shadowColor: AppConfig.ShadowColor(darkMode),
+              borderColor: more
+                ? (false ? AppConfig.BackGroundButton(darkMode) : "#3f96ee")
+                : "transparent",
+            }
+          ]}
+          activeOpacity={0.8}
+        >
+          <View style={{marginBottom: 4}}>
+            <Ionicons name="calendar-outline" size={24} color="white" />
+          </View>
+          <Text style={[
+            styles.dayFull,
+            {
+              color: more
+                ? "rgba(255,255,255,0.9)"
+                : AppConfig.SecondaryTextColor(darkMode),
+              fontWeight: more ? "600" : "500"
+            }
+          ]}>
+            {"Plus"}
+          </Text>
+          <Text style={[
+            styles.dayFull,
+            {
+              color: more  
+                ? "rgba(255,255,255,0.9)"
+                : AppConfig.SecondaryTextColor(darkMode),
+              fontWeight: more ? "600" : "500"
+            }
+          ]}>
+            {dateMore ? DateToUI(dateMore) : "de dates"}
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
+    </>
   );
 }
 
@@ -157,7 +244,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 16,
   },
-  
+
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -165,32 +252,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginBottom: 16,
   },
-  
+
   title: {
     fontSize: 18,
     fontWeight: '700',
   },
-  
+
   actions: {
     flexDirection: 'row',
     gap: 16,
   },
-  
+
   actionButton: {
     paddingVertical: 4,
     paddingHorizontal: 8,
   },
-  
+
   actionText: {
     fontSize: 14,
     fontWeight: '600',
   },
-  
+
   daysContainer: {
     paddingHorizontal: 16,
     gap: 12,
   },
-  
+
   dayButton: {
     minWidth: 80,
     height: 70,
@@ -204,12 +291,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
   },
-  
+
   dayShort: {
     fontSize: 20,
     marginBottom: 2,
   },
-  
+
   dayFull: {
     fontSize: 10,
     textAlign: 'center',

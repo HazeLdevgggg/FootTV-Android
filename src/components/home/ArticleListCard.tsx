@@ -57,6 +57,12 @@ function ArticleListCard(props: Article) {
             <View style={styles.textContainerUne}>
               {/* Tags avec alignement à gauche fixe */}
               <View style={styles.modernTagsRowUne}>
+                {props.theme && (
+                  <View style={styles.modernLiveContainer}>
+                    <View style={styles.modernLiveDot} />
+                    <Text style={styles.modernLiveText}>{props.theme}</Text>
+                  </View>
+                )}
                 {!!props.exclu && (
                   <View style={styles.modernExcluContainer}>
                     <View style={styles.modernExcluDot} />
@@ -67,12 +73,6 @@ function ArticleListCard(props: Article) {
                   <View style={styles.modernVideoContainer}>
                     <View style={styles.modernVideoDot} />
                     <Text style={styles.modernVideoText}>VIDÉO</Text>
-                  </View>
-                )}
-                {!!props.live && (
-                  <View style={styles.modernLiveContainer}>
-                    <View style={styles.modernLiveDot} />
-                    <Text style={styles.modernLiveText}>LIVE</Text>
                   </View>
                 )}
               </View>
@@ -132,8 +132,14 @@ function ArticleListCard(props: Article) {
 
               {/* Section contenu */}
               <View style={styles.textContainer}>
-                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center",flexWrap:"wrap" }}>
+                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center",flexWrap:"wrap"   }}>
                   <View style={styles.modernTagsRow}>
+                  {props.theme && (
+                  <View style={styles.modernLiveContainer}>
+                    <View style={styles.modernLiveDot} />
+                    <Text style={styles.modernLiveText}>{props.theme}</Text>
+                  </View>
+                )}
                     {!!props.exclu && (
                       <View style={styles.modernExcluContainer}>
                         <View style={styles.modernExcluDot} />
@@ -144,12 +150,6 @@ function ArticleListCard(props: Article) {
                       <View style={styles.modernVideoContainer}>
                         <View style={styles.modernVideoDot} />
                         <Text style={styles.modernVideoText}>VIDÉO</Text>
-                      </View>
-                    )}
-                    {!!props.live && (
-                      <View style={styles.modernLiveContainer}>
-                        <View style={styles.modernLiveDot} />
-                        <Text style={styles.modernLiveText}>LIVE</Text>
                       </View>
                     )}
                   </View>

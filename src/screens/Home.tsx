@@ -51,16 +51,7 @@ function Home() {
   });
 
   // Nouvel état pour gérer l'affichage des pubs
-  const [showAds, setShowAds] = useState(false);
-
-  useEffect(() => {
-    // Exemple de logique pour afficher ou non la pub (à adapter)
-    const checkShowAds = () => {
-      // Par exemple, 50% de chances d'afficher la pub
-      return Math.random() > 0.5;
-    };
-    setShowAds(checkShowAds());
-  }, []);
+  const [showAds, setShowAds] = useState(true);
 
   useEffect(() => {
     if (!notificationsInitialized) {

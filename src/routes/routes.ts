@@ -13,4 +13,5 @@ export const routes: { [name: string]: string } = {
     Channel: "chaines.php",
     Description: "emission.php",
     Push: "init/push.php",
+    ArticlePage: "infos/chrono.php",
 };

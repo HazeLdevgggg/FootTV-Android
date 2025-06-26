@@ -22,6 +22,7 @@ import Discover from "../screens/Discover";
 import Favoris from "../screens/Favoris";
 import FiltersSavePage from "../screens/FiltersSavePage";
 import FavorisOnBoarding from "../screens/OnBoarding/FavorisOnBoarding";
+import ArticlePage from "../screens/ArticlePage";
 const Stack = createNativeStackNavigator<StackScreens>();
 const Tab = createBottomTabNavigator();
 
@@ -63,6 +64,7 @@ const createStackNavigator = (
       <Stack.Screen name="Favoris" component={Favoris} />
       <Stack.Screen name="FavorisOnBoarding" component={FavorisOnBoarding} />
       <Stack.Screen name="FiltersSave" component={FiltersSavePage} />
+      <Stack.Screen name="ArticlePage" component={ArticlePage} />
     </Stack.Navigator>
 
   );

@@ -45,7 +45,7 @@ function Discover() {
             color: "#28a745",
             bgGradient: ["#28a745", "#34ce57"],
             onPress: () => navigation.push("Channel"),
-        }
+        },
     ];
 
     const renderCategoryCard = (category, index) => (
@@ -190,6 +190,55 @@ function Discover() {
                 <SectionDivider icon="apps-outline" label="Catégories" />
                 <View style={styles.categoriesContainer}>
                     {renderCategoryGrid()}
+                    <TouchableOpacity
+                        key={"news"}
+                        style={[
+                            styles.categoryCardArticle,
+                            {
+                                backgroundColor: AppConfig.BackGroundButton(darkMode),
+                                shadowColor: AppConfig.ShadowColor(darkMode),
+                            }
+                        ]}
+                        onPress={() => navigation.push("ArticlePage")}
+                        activeOpacity={0.8}
+                    >
+                        <View style={styles.articleCardContent}>
+                            <View style={[styles.iconContainerArticle, { backgroundColor: "#e83e8c15" }]}>
+                                <Ionicons
+                                    name="newspaper-outline"
+                                    size={28}
+                                    color="#e83e8c"
+                                />
+                            </View>
+                            <View style={styles.articleTextContainer}>
+                                <Text
+                                    style={[
+                                        styles.categoryTitleArticle,
+                                        { color: AppConfig.MainTextColor(darkMode) }
+                                    ]}
+                                    numberOfLines={1}
+                                >
+                                    Actualités
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.categorySubtitle,
+                                        { color: AppConfig.SecondaryTextColor(darkMode) }
+                                    ]}
+                                    numberOfLines={1}
+                                >
+                                    Dernières nouvelles 100% foot
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={[styles.arrowArticle, { backgroundColor: "#e83e8c15" }]}>
+                            <Ionicons
+                                name="arrow-forward"
+                                size={18}
+                                color="#e83e8c"
+                            />
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
                 {/* Section bonus avec style moderne */}
@@ -306,6 +355,63 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         minHeight: 140,
         justifyContent: "space-between",
+    },
+    categoryCardArticle: {
+        flexDirection: "row",
+        flex: 1,
+        padding: 20,
+        borderRadius: 16,
+        alignItems: "center",
+        elevation: 4,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
+        minHeight: 100,
+        justifyContent: "space-between",
+        // Dégradé subtil avec border
+        borderWidth: 1,
+        borderColor: "#e83e8c10",
+    },
+    
+    articleCardContent: {
+        flexDirection: "row",
+        alignItems: "center",
+        flex: 1,
+    },
+    
+    iconContainerArticle: {
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        alignItems: "center",
+        justifyContent: "center",
+        marginRight: 16,
+    },
+    
+    articleTextContainer: {
+        flex: 1,
+        justifyContent: "center",
+    },
+    
+    categoryTitleArticle: {
+        fontSize: 16,
+        fontWeight: "700",
+        marginBottom: 2,
+    },
+    
+    categorySubtitle: {
+        fontSize: 12,
+        fontWeight: "500",
+        opacity: 0.7,
+    },
+    
+    arrowArticle: {
+        width: 36,
+        height: 36,
+        borderRadius: 18,
+        alignItems: "center",
+        justifyContent: "center",
+        marginLeft: 12,
     },
     categoryCardPlaceholder: {
         flex: 1,

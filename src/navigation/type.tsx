@@ -16,4 +16,5 @@ export type StackScreens = {
   Favoris : undefined;
   FiltersSave : undefined;
   FavorisOnBoarding : undefined;
+  ArticlePage : undefined;
 };
