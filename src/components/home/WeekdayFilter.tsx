@@ -24,6 +24,7 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
   const [more, setMore] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
   const [dateMore, setDateMore] = useState<string>("");
+  const [tempDate, setTempDate] = useState<Date>(new Date());
 
   useEffect(() => {
     const newWeekdays = [];
@@ -81,6 +82,44 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
     return `${year}-${month}-${day}`;
   };
 
+  const handleDatePickerChange = (event: any, date?: Date) => {
+    if (Platform.OS === 'ios') {
+      if (date) {
+        setTempDate(date);  // On stocke temporairement la date
+      }
+    } else {
+      // Android - comportement original
+      if (event.type === "dismissed") {
+        setShowPicker(false);
+        setMore(false);
+        setDateMore("");
+        clearAll();
+        return;
+      }
+      if (event.type === "set" && date) {
+        setShowPicker(false);
+        setMore(true);
+        toggleDay(DateToString(date));
+        setDateMore(DateToString(date));
+      }
+    }
+  };
+
+  const handleValidateDate = () => {
+    setShowPicker(false);
+    setMore(true);
+    toggleDay(DateToString(tempDate));
+    setDateMore(DateToString(tempDate));
+  };
+
+  const handleCancelDate = () => {
+    setShowPicker(false);
+    setMore(false);
+    setDateMore("");
+    setTempDate(new Date());
+    clearAll();
+  };
+
   return (
     <>
     {showPicker && (
@@ -92,30 +131,47 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
           visible={showPicker}
           onRequestClose={() => setShowPicker(false)}
         >
-          <View style={styles.modalContainer}>
-            <View style={styles.pickerContainer}>
-              <DateTimePicker
-                value={new Date()}
-                mode="date"
-                display="spinner"
-                themeVariant={darkMode ? "dark" : "light"}
-                locale="fr-FR"
-                onChange={(event, date) => {
-                  if (event.type === "dismissed") {
-                    setShowPicker(false);
-                    setMore(false);
-                    setDateMore("");
-                    clearAll();
-                    return;
-                  }
-                  if (event.type === "set" && date) {
-                    setShowPicker(false);
-                    setMore(true);
-                    toggleDay(DateToString(date));
-                    setDateMore(DateToString(date));
-                  }
-                }}
-              />
+          <View style={styles.modalOverlay}>
+            <View style={[styles.modalContainer, { backgroundColor: AppConfig.BackgroundColor(darkMode) }]}>
+              <View style={styles.modalHeader}>
+                <Text style={[styles.modalTitle, { color: AppConfig.MainTextColor(darkMode) }]}>
+                  Sélectionner une date
+                </Text>
+              </View>
+              
+              <View style={styles.pickerWrapper}>
+                <DateTimePicker
+                  value={tempDate}
+                  mode="date"
+                  display="spinner"
+                  themeVariant={darkMode ? "dark" : "light"}
+                  locale="fr-FR"
+                  onChange={handleDatePickerChange}
+                  style={styles.datePicker}
+                />
+              </View>
+
+              <View style={styles.modalButtons}>
+                <TouchableOpacity
+                  style={[styles.modalButton, styles.cancelButton, { backgroundColor: AppConfig.BackGroundButton(darkMode) }]}
+                  onPress={handleCancelDate}
+                  activeOpacity={0.8}
+                >
+                  <Text style={[styles.cancelButtonText, { color: AppConfig.SecondaryTextColor(darkMode) }]}>
+                    Réinitialiser
+                  </Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity
+                  style={[styles.modalButton, styles.validateButton]}
+                  onPress={handleValidateDate}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.validateButtonText}>
+                    Valider
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </Modal>
@@ -126,21 +182,7 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
             display="default"
             themeVariant={darkMode ? "dark" : "light"}
             locale="fr-FR"
-            onChange={(event, date) => {
-              if (event.type === "dismissed") {
-                setShowPicker(false);
-                setMore(false);
-                setDateMore("");
-                clearAll();
-                return;
-              }
-              if (event.type === "set" && date) {
-                setShowPicker(false);
-                setMore(true);
-                toggleDay(DateToString(date));
-                setDateMore(DateToString(date));
-              }
-            }}
+            onChange={handleDatePickerChange}
           />
       )}
       </>
@@ -247,7 +289,7 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
           activeOpacity={0.8}
         >
           <View style={{marginBottom: 4}}>
-            <Ionicons name="calendar-outline" size={24} color="white" />
+            <Ionicons name="calendar-outline" size={24} color={more ? "white" : AppConfig.IconColor(darkMode)} />
           </View>
           <Text style={[
             styles.dayFull,
@@ -334,21 +376,87 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 2,
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  pickerContainer: {
-    paddingTop: 20,
-    paddingBottom: 40,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-  },
 
   dayFull: {
     fontSize: 10,
     textAlign: 'center',
+  },
+
+  // Styles pour la modal iOS
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+  },
+
+  modalContainer: {
+    width: '85%',
+    borderRadius: 20,
+    paddingTop: 24,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+
+  modalHeader: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+
+  pickerWrapper: {
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+
+  datePicker: {
+    width: '100%',
+    height: 200,
+  },
+
+  modalButtons: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+
+  modalButton: {
+    flex: 1,
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  cancelButton: {
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+
+  validateButton: {
+    backgroundColor: '#3f96ee',
+  },
+
+  cancelButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  validateButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 
@@ -359,4 +467,4 @@ export const getCurrentDayInFrench = () => {
   const date = new Date();
   const options: Intl.DateTimeFormatOptions = { weekday: 'long' as const };
   return date.toLocaleDateString('fr-FR', options);
-}
+};

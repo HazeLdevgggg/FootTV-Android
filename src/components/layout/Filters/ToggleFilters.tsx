@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { AppConfig } from "../../../AppConfig";
-import DatePickerModal from "../DatePickerModal";
 import CloseIcon from "./CloseIcon";
 function ToggleFilters({
   onFilterChange,

@@ -9,7 +9,7 @@ import { ThemeProvider, ThemeContext } from "./context/ThemeContext";
 import { StatusBar } from 'expo-status-bar';
 import { AppConfig } from "./AppConfig";
 import { initializeDidomi } from "../src/hooks/Didomi";
-import { initializeGAM, preloadInterstitial } from './hooks/Pub';
+import { initializeGAM } from './hooks/Pub';
 import { useContext, useEffect } from "react";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import OnBoarding from "./screens/OnBoarding/Onboarding";
@@ -66,7 +66,6 @@ function AppContainer() {
             try {
                 await initializeDidomi();
                 await initializeGAM();
-                await preloadInterstitial();
                 await createNotificationChannel();
           
             } finally {

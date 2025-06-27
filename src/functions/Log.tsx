@@ -1,4 +1,4 @@
 export default function Log(param:string){
-    const debug = true;
+    const debug = false;
     if(debug) console.log(param)
 } 
