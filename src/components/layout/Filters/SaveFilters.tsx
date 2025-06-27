@@ -8,6 +8,7 @@ import { Alert } from "react-native";
 import Search from "../Search";
 import Toast from 'react-native-toast-message';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Log from "../../../functions/Log";
 type Category = {
     name: string;
     id: string;
@@ -35,7 +36,6 @@ function SaveFilters({
     const [categories, setCategories] = useState<Category[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const insets = useSafeAreaInsets();
-    console.log(type);
 
     const DateToStringUI = (date: string) => {
         const [year, month, day] = date.split("-");
@@ -233,8 +233,8 @@ function SaveFilters({
                                         [
                                             {
                                                 text: "OK",
-                                                onPress: () => console.log("OK Pressed"),
-                                            },
+                                                onPress: () => Log("OK Pressed"),
+                                            },  
                                         ]
                                     );
                                 } else if (isFilterEmpty()) {
@@ -244,7 +244,7 @@ function SaveFilters({
                                         [
                                             {
                                                 text: "OK",
-                                                onPress: () => console.log("OK Pressed"),
+                                                onPress: () => Log("OK Pressed"),
                                             },
                                         ]
                                     );

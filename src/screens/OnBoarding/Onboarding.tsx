@@ -140,7 +140,13 @@ const RenderItem = ({
 
   return (
     <View style={[styles.itemContainer, { width: SCREEN_WIDTH }]}>
-      <View style={[styles.imageContainer,{ marginTop: SCREEN_HEIGHT * 0.1 }]}>
+
+      <View style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: SCREEN_HEIGHT * 0.45, // image en haut
+        marginTop: SCREEN_HEIGHT * 0.05,
+      }}>
         <Animated.Image
           resizeMode="contain"
           source={item.image}
@@ -154,7 +160,13 @@ const RenderItem = ({
         />
       </View>
 
-      <Animated.View style={[styles.textContainer, textAnimatedStyle]}>
+      <Animated.View style={[{
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: SCREEN_HEIGHT * 0.4,
+        paddingHorizontal: 20,
+      }, textAnimatedStyle]}>
+
         {/* Titre */}
         <Animated.View style={[styles.titleContainer, titleAnimatedStyle]}>
           <Text style={[
@@ -181,6 +193,7 @@ const RenderItem = ({
           </View>
         </Animated.View>
       </Animated.View>
+
     </View>
   );
 };
@@ -208,7 +221,7 @@ export default function Onboarding() {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.container, { paddingBottom: insets.top  }]}>
+    <View style={[styles.container, { paddingBottom: insets.top }]}>
       <Animated.FlatList
         ref={flatListRef as any}
         data={data}
@@ -228,7 +241,7 @@ export default function Onboarding() {
         }}
       />
 
-      <View style={styles.footerContainer}>
+      <View style={[styles.footerContainer, { bottom: insets.bottom }]}>
         <Pagination data={data} screenWidth={SCREEN_WIDTH} x={x} />
         <Button
           flatListRef={flatListRef}
@@ -321,10 +334,13 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
   },
   footerContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    margin: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
 });

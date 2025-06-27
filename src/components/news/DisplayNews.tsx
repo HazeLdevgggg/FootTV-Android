@@ -11,12 +11,13 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { useContext } from 'react';
 import { AppConfig } from '../../AppConfig';
 import { ArticleDetail } from '../../utils/ArticleDetailType';
+import Log from '../../functions/Log';
 
 export default function InfoItem(props: ArticleDetail) {
     const { darkMode } = useContext(ThemeContext);
     const { width: contentWidth } = useWindowDimensions();
     var html = props.info;
-    console.log(html);
+    Log(html);
     html = html.replace(/(<img\b[^>]*)(width|height)="[^"]*"([^>]*>)/g, '$1$3');
 
     const [webViewHeight, setWebViewHeight] = useState(contentWidth * 0.5625); // Hauteur par défaut (16:9)

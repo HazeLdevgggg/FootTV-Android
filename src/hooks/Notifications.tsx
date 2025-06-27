@@ -3,7 +3,7 @@ import notifee, { AndroidImportance } from '@notifee/react-native';
 import { Platform } from 'react-native';
 import { AppConfig } from '../AppConfig';
 import { routes } from '../routes/routes';
-
+import Log from '../functions/Log';
 interface DataType {
   infos: string;
   direct: string;
@@ -25,7 +25,7 @@ interface NotificationContext {
 
 // Fonction pour configurer les notifications
 export async function setupNotifications(navigation, context: NotificationContext) {
-  console.log("Initialisation des Notifications");
+  Log("Initialisation des Notifications");
   const {
     token,
     profil_id,
@@ -46,18 +46,18 @@ export async function setupNotifications(navigation, context: NotificationContex
     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
   if (!enabled) {
-    console.log('Authorization status: ' + authStatus);
+      Log('Authorization status: ' + authStatus);
     return;
   }
 
   // Obtenir et afficher le NewToken FCM
   const NewToken = await messaging().getToken();
-  console.log('FCM NewToken: ' + NewToken);
+  Log('FCM NewToken: ' + NewToken);
 
   // Si le token a changé, on l’enregistre
   if (NewToken != token || token === "") {
 
-    console.log(`${AppConfig.API_BASE_URL}${routes.Push}?apikey=${AppConfig.API_Key}&site=300`);
+    Log(`${AppConfig.API_BASE_URL}${routes.Push}?apikey=${AppConfig.API_Key}&site=300`);
     try{
       const response = await fetch(`${AppConfig.API_BASE_URL}${routes.Push}?apikey=${AppConfig.API_Key}&site=300`, {
         method: 'POST',
@@ -72,16 +72,16 @@ export async function setupNotifications(navigation, context: NotificationContex
         }),
       });
       if(response.ok){
-        console.log("On enregistre le NewToken dans la base de donnée");
+        Log("On enregistre le NewToken dans la base de donnée");
         const data = await response.json();
-        console.log(data);
+        Log(data);
       }else{
         console.error("Error enregistring NewToken:", response);
       }
     }catch(e){
       console.error("Error enregistring NewToken:", e);
     }
-    console.log("On enregistre le NewToken dans le contexte");
+    Log("On enregistre le NewToken dans le contexte");
     setToken(NewToken);
     setNotification_emission("1");
     setNotification_info("1");
@@ -89,41 +89,41 @@ export async function setupNotifications(navigation, context: NotificationContex
 
   // Écouter les notifications lorsque l'app est en premier plan
   messaging().onMessage(async remoteMessage => {
-    console.log('FCM message reçu en premier plan:', remoteMessage);
+    Log('FCM message reçu en premier plan:'+remoteMessage);
     const data = remoteMessage.data;
    // navigate(navigation, data.infos, data.direct);
   });
 
   // Notifications reçues en arrière-plan
   messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-    console.log('Message reçu en arrière-plan :', remoteMessage);
+    Log('Message reçu en arrière-plan :'+ remoteMessage);
   });
 
   // Notification déclenchant l'ouverture depuis l'arrière-plan
   messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log('Ouverture depuis arrière-plan via notification:', remoteMessage);
+    Log('Ouverture depuis arrière-plan via notification:'+ remoteMessage);
     const data = remoteMessage.data;
     setNotificationPending("1");
     setNotification_info(String(data.infos));
     setNotification_emission(String(data.direct));
-    navigate(navigation, data.infos, data.direct);
+    navigate(navigation, data.infos ?? "0", data.direct ?? "0");
   });
 
   // Notification déclenchant l'ouverture depuis l'état fermé
   const initialNotification = await messaging().getInitialNotification();
   if (initialNotification) {
-    console.log('Ouverture depuis état fermé via notification:', initialNotification);
+    Log('Ouverture depuis état fermé via notification:'+ initialNotification);
     const data = initialNotification.data;
-    navigate(navigation, data.infos, data.direct);
+    navigate(navigation, data.infos ?? "0", data.direct ?? "0");
   }
 }
 
 // Navigation vers la page selon la donnée
-function navigate(navigation, info, match) {
+function navigate(navigation, info, direct) {
   if (info && info != "0") {
     navigation.push("Article", { id: info });
   }
-  if (match && match != "0") {
+  if (direct && direct != "0") {
     navigation.push("Notifications");
   }
 }

@@ -8,6 +8,7 @@ import {
 } from "react-native-google-mobile-ads";
 import mobileAds from "react-native-google-mobile-ads";
 import { AppConfig } from "../AppConfig";
+import Log from "../functions/Log"
 
 // 🔁 Interstitial global (garde-le global)
 const INTERSTITIAL_UNIT_ID = "/49926454/madeinsupporter>appli/une>topic>interstitiel";
@@ -43,8 +44,8 @@ export const initializeGAM = async () => {
     try {
         await mobileAds()
             .initialize()
-            .then(() => console.log("✅ Mobile Ads initialized"))
-            .catch((e) => console.log("❌ Mobile Ads failed to init:", e));
+            .then(() => Log("✅ Mobile Ads initialized"))
+            .catch((e) => Log("❌ Mobile Ads failed to init:"+ e));
         setupInterstitialListeners();
         preloadInterstitial();
     } catch (error) {
@@ -59,29 +60,17 @@ export const preloadInterstitial = () => {
 };
 
 
-// ✅ Hook personnalisé pour gérer les interstitiels
 export const useInterstitial = () => {
-    const [interstitialLoad, setInterstitialLoad] = useState<string>("0");
-
-
     useEffect(() => {
-        setupInterstitialListeners(setInterstitialLoad);
+        setupInterstitialListeners();
         preloadInterstitial();
     }, []);
 
     const showInterstitial = (onClose?: () => void) => {
         if (interstitial.loaded) {
-            const closeListener = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
-                console.log("Interstitial ad closed");
-                if (onClose) onClose();
-                closeListener(); // retire le listener
-                preloadInterstitial();
-            });
-
             interstitial.show();
-            setInterstitialLoad("0");
         } else {
-            console.log("Interstitial ad not loaded, preloading...");
+            Log("Interstitial ad not loaded, preloading...");
             preloadInterstitial();
             if (onClose) onClose();
         }
@@ -90,30 +79,30 @@ export const useInterstitial = () => {
     return { showInterstitial };
 };
 
-// 🔁 setupListeners peut maintenant recevoir setInterstitialLoad dynamiquement
-export const setupInterstitialListeners = (setInterstitialLoad?: (value: string) => void) => {
+// Modifie aussi setupInterstitialListeners pour gérer le callback
+export const setupInterstitialListeners = () => {
     listeners.forEach(remove => remove());
     listeners = [];
 
     listeners.push(
         interstitial.addAdEventListener(AdEventType.LOADED, () => {
-            setInterstitialLoad?.("1");
-            console.log("Interstitial ad loaded");
+            Log("Interstitial ad loaded");
         })
     );
+    
     listeners.push(
         interstitial.addAdEventListener(AdEventType.CLOSED, () => {
-            console.log("Interstitial ad closed");
+            Log("Interstitial ad closed");
             preloadInterstitial();
         })
     );
+    
     listeners.push(
         interstitial.addAdEventListener(AdEventType.ERROR, (error) => {
-            console.log("Interstitial ad error:", error);
+            Log("Interstitial ad error: " + error);
         })
     );
 };
-
 // 🧱 BANNERS
 type BannerProps = {
     unitId: string;

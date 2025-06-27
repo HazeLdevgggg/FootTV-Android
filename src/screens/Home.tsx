@@ -23,7 +23,7 @@ import { useTypedNavigation } from "../navigation/navigation";
 import { routes } from "../routes/routes";
 import { PubPage } from "../utils/PubPageType";
 import { setupNotifications } from '../hooks/Notifications';
-
+import Log from "../functions/Log"
 let notificationsInitialized = false;
 
 function Home() {
@@ -55,7 +55,7 @@ function Home() {
 
   useEffect(() => {
     if (!notificationsInitialized) {
-      console.log("Init Notification");
+      Log("Init Notification");
       setupNotifications(navigator, context);
       notificationsInitialized = true;
     }
@@ -63,7 +63,7 @@ function Home() {
     const getChannel = async () => {
       try {
         setIsLoading(true);
-        console.log(
+        Log(
           `${AppConfig.API_BASE_URL}${routes.Home}?apikey=${AppConfig.API_Key}`,
         );
         const response = await fetch(
@@ -94,7 +94,7 @@ function Home() {
   }
 
   const MatchEnCours = (date: string, heure: string) => {
-    console.log(date, heure);
+    Log(date+" "+ heure);
     const [day, month, year] = date.split("/");
     const [hour, minute] = heure.split("h");
     const matchStart = new Date(
@@ -147,7 +147,7 @@ function Home() {
     setSelectedDays(params);
     try {
       setDaysLoading(true);
-      console.log(`${AppConfig.API_BASE_URL}${routes.SearchDate}?apikey=${AppConfig.API_Key}`);
+      Log(`${AppConfig.API_BASE_URL}${routes.SearchDate}?apikey=${AppConfig.API_Key}`);
       const response = await fetch(`${AppConfig.API_BASE_URL}${routes.SearchDate}?apikey=${AppConfig.API_Key}`, {
         method: 'POST',
         headers: {
@@ -159,8 +159,8 @@ function Home() {
           favoris: JSON.stringify(favorisParams),
         }),
       });
-      console.log("Dates :", JSON.stringify(params));
-      console.log("Favoris :", JSON.stringify(favorisParams));
+      Log("Dates :"+ JSON.stringify(params));
+      Log("Favoris :"+ JSON.stringify(favorisParams));
       const data = await response.json();
       setDateHome(data.dates);
       setDateHomeFilter(data.dates);
@@ -183,7 +183,7 @@ function Home() {
         });
         setDateHome(filtered);
       }
-      console.log(data);
+      Log(data);
     } catch (error) {
       console.error(error);
     } finally {

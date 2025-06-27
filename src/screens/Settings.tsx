@@ -14,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { AppConfig } from "../AppConfig";
 import { showConsentNotice } from "../hooks/Didomi";
 import { useTypedNavigation } from "../navigation/navigation";
+import Log from "../functions/Log"
 import { routes } from "../routes/routes";
 function Settings() {
   const navigation = useTypedNavigation();
@@ -28,8 +29,8 @@ function Settings() {
         }&type=notification-emission&profil=${profil_id}`
       );
       const data = await response.json();
-      console.log("Notification Match response:", data);
-      console.log("notification_emission",notification_emission === "1" ? "0" : "1");
+      Log("Notification Match response:"+ data);
+      Log("notification_emission"+(notification_emission === "1" ? "0" : "1"));
       await setNotification_emission(notification_emission === "1" ? "0" : "1");
     } catch (error) {
       console.error("Error updating notification settings:", error);
@@ -44,8 +45,8 @@ function Settings() {
         }&type=notification-info&profil=${profil_id}`
       );
       const data = await response.json();
-      console.log("Notification Article response:", data);
-      console.log("notification_info",notification_info === "1" ? "0" : "1");
+      Log("Notification Article response:"+ data);
+      Log("notification_info"+notification_info === "1" ? "0" : "1");
       await setNotification_info(notification_info === "1" ? "0" : "1");
     } catch (error) {
       console.error("Error updating notification settings:", error);

@@ -9,6 +9,7 @@ import SaveFilters from './Filters/SaveFilters';
 import LoadFavoris from './Filters/LoadFavoris';
 import SectionDivider from '../home/SectionDivider';
 import ResetToggleFilters from './Filters/ResetToggleFilters';
+import Log from '../../functions/Log';
 export default function FiltersPageSection({
   OnFilterChange,
   SearchValue,
@@ -127,7 +128,7 @@ export default function FiltersPageSection({
         <ToggleFilters icon="pulse-outline" name="Match en cours" value={EnCour} onFilterChange={() => toggleEnCour()} />
         <LoadFavoris Value={Favoris} onFilterChange={(newFavoris: string[], isApplied: boolean) => {
           if (isApplied) {
-            console.log(">> newFavoris :", newFavoris);
+            Log(">> newFavoris :" + newFavoris);
             setFavoris(newFavoris);
             OnFilterChange(SearchValue, CeSoir, EnDirect, ClubId, CompetitionId, ChannelId, date, EnCour, newFavoris);
           }

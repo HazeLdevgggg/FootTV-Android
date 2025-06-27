@@ -10,6 +10,7 @@ import Empty from "./Empty";
 import CloseIcon from "./Filters/CloseIcon";
 import ScreenHeader from "./ScreenHeader/ScreenHeaderNoIcon";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Log from "../../functions/Log";
 
 function NotificationTime({
     onValidate,
@@ -26,8 +27,8 @@ function NotificationTime({
     name: string;
     icon: string;
 }) {
-    console.log("date",date)
-    console.log("heure",heure)
+    Log("date"+date)
+    Log("heure"+heure)
     const [day, month, year] = date.split("/");
     const [isDropdownVisible, setIsDropdownVisible] = useState(true);
     const [selectedFilter, setSelectedFilter] = useState<boolean>(false);
@@ -36,9 +37,9 @@ function NotificationTime({
     const now = new Date();
     const [hour, minute] = heure.split("h");
     const matchDateTime = new Date(`${year}-${month}-${day}T${hour.padStart(2, "0")}:${minute.padStart(2, "0")}:00`);
-    console.log("matchDateTime",matchDateTime)
+    Log("matchDateTime"+matchDateTime)
     const diffInMinutes = Math.floor((matchDateTime.getTime() - now.getTime()) / 60000);
-    console.log(diffInMinutes)
+    Log("diffInMinutes"+diffInMinutes)
     if (diffInMinutes >= 5) DateNotification.push({ id: "5", name: "5 minutes avant" });
     if (diffInMinutes >= 60) DateNotification.push({ id: "60", name: "1 heure avant" });
     if (diffInMinutes >= 1440) DateNotification.push({ id: "1440", name: "1 jour avant" });

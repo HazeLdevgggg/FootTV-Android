@@ -1,17 +1,16 @@
 // didomiUtils.ts
 import { Didomi } from "@didomi/react-native";
+import Log from "../functions/Log"
 
 export const testConsent = async () => {
-  // Test si on a donné le consentement
   const didomi = await Didomi.shouldUserStatusBeCollected();
-  console.log(didomi);
 };
 
 // Fonction pour initialiser Didomi
 export const initializeDidomi = async () => {
   try {
     Didomi.onReady().then(() => {
-      console.log("Didomi SDK is ready");
+      Log("Didomi SDK is ready");
       // Vous pouvez appeler des actions ici, comme afficher manuellement la notice
       testConsent();
     });
@@ -27,7 +26,7 @@ export const initializeDidomi = async () => {
       "RrwX6PZF",
     );
     Didomi.setupUI();
-    console.log("Didomi SDK initialized");
+    Log("Didomi SDK initialized");
   } catch (error) {
     console.error("Error initializing Didomi:", error);
   }
@@ -35,11 +34,11 @@ export const initializeDidomi = async () => {
 
 // Fonction pour afficher la fenêtre de consentement
 export const showConsentNotice = async () => {
-  console.log("On essaye d'afficher la fenêtre de consentement");
+  Log("On essaye d'afficher la fenêtre de consentement");
   try {
     await Didomi.showPreferences();
-    console.log("Consent notice displayed");
+    Log("Consent notice displayed");
   } catch (error) {
-    console.error("Error displaying consent notice:", error);
+    Log("Error displaying consent notice:"+ error);
   }
 };

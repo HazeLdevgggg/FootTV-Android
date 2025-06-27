@@ -5,6 +5,7 @@ import { Favoris } from "../utils/FavorisType";
 import { AppConfig } from "../AppConfig";
 import FiltersType from "../utils/FIltersType";
 import { routes } from "../routes/routes";
+import Log from "../functions/Log";
 
 type ThemeContextType = {
   onBoarding: number;
@@ -136,17 +137,17 @@ export const ThemeProvider = ({ children }) => {
         const res = await fetch(`${AppConfig.API_BASE_URL}${routes.Profile}?apikey=${AppConfig.API_Key}&profil=0&site=300&version=3.0&plateform=${os}&rand=${Math.random()}`);
         const json = await res.json();
         await setProfil_id(json.profil.id);
-        console.log("✔️ Nouveau profil ID créé :", json.profil.id);
+        Log("✔️ Nouveau profil ID créé :"+ json.profil.id);
       } catch (e) {
-        console.error("❌ Erreur lors de la création du profil :", e);
+       Log("❌ Erreur lors de la création du profil :"+ e);
       }
     } else {
       try {
         await fetch(`${AppConfig.API_BASE_URL}${routes.Profile}?apikey=${AppConfig.API_Key}&profil=${savedProfil}&site=300&version=3.0&plateform=${os}&rand=${Math.random()}`);
         setProfil_id(savedProfil);
-        console.log("✅ Profil ID existant validé :", savedProfil);
+        Log("✅ Profil ID existant validé :"+ savedProfil);
       } catch (e) {
-        console.error("❌ Erreur lors de la validation du profil :", e);
+        Log("❌ Erreur lors de la validation du profil :"+ e);
       }
     }
   };

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Platform } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Platform,Modal } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { AppConfig } from "../../../AppConfig";
@@ -35,25 +35,59 @@ function DateFilters({
   return (
     <>
       {showPicker && (
+      <>
+        {Platform.OS === 'ios' ? (
+        <Modal
+          transparent
+          animationType="slide"
+          visible={showPicker}
+          onRequestClose={() => setShowPicker(false)}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.pickerContainer}>
+              <DateTimePicker
+                value={new Date()}
+                mode="date"
+                display="spinner"
+                themeVariant={darkMode ? "dark" : "light"}
+                locale="fr-FR"
+                onChange={(event, date) => {
+                  if (event.type === "dismissed") {
+                    setShowPicker(false);
+                    return;
+                  }
+                  if (event.type === "set" && date) {
+                    setShowPicker(false);
+                    setSelectedTime(date);
+                    onFilterChange(DateToString(date));
+                  }
+                }}
+              />
+            </View>
+          </View>
+        </Modal>
+      ) : (
         <DateTimePicker
-          value={selectedTime}
-          mode="date"
-          display={"default"}
-          themeVariant={darkMode ? "dark" : "light"}
-          locale="fr-FR"
-          onChange={(event, date) => {
-            if (event.type === "dismissed") {
-              setShowPicker(false);
-              return;
-            }
-            if (event.type === "set" && date) {
-              setShowPicker(false);
-              setSelectedTime(date);
-              onFilterChange(DateToString(date));
-            }
-          }}
-        />
+            value={new Date()}
+            mode="date"
+            display="default"
+            themeVariant={darkMode ? "dark" : "light"}
+            locale="fr-FR"
+            onChange={(event, date) => {
+              if (event.type === "dismissed") {
+                setShowPicker(false);
+                return;
+              }
+              if (event.type === "set" && date) {
+                setShowPicker(false);
+                setSelectedTime(date);
+                onFilterChange(DateToString(date));
+              }
+            }}
+          />
       )}
+      </>
+    )}
       <View
         style={[
           styles.horizontal,
@@ -143,6 +177,17 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 12,
     fontWeight: "900",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  pickerContainer: {
+    paddingTop: 20,
+    paddingBottom: 40,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
   filterContainer: {
     position: "relative",

@@ -18,14 +18,16 @@ import { routes } from "../routes/routes";
 import { ItemList } from "../utils/ItemListType";
 import { Banner, BannerHeader, BannerFooter } from "../hooks/Pub";
 import { PubPage } from "../utils/PubPageType";
+import Log from "../functions/Log"
+
 async function GetResult(
     props: SearchType,
     { OnFinish }: { OnFinish: (Loading: boolean) => void }
 ): Promise<{ res: ItemList[]; pub: PubPage }> {
     try {
         OnFinish(true);
-        console.log("Props :", props);
-        console.log(`${AppConfig.API_BASE_URL}${routes.Search}?apikey=${AppConfig.API_Key}`)
+        Log("Props :"+ props);
+        Log(`${AppConfig.API_BASE_URL}${routes.Search}?apikey=${AppConfig.API_Key}`)
         const response = await fetch(`${AppConfig.API_BASE_URL}${routes.Search}?apikey=${AppConfig.API_Key}`, {
             method: 'POST',
             headers: {
@@ -44,15 +46,15 @@ async function GetResult(
                 Favoris: props.Favoris,
             }),
         });
-        console.log(">> search :", props.search);
-        console.log(">> CeSoir :", props.CeSoir);
-        console.log(">> EnCour :", props.EnCour);
-        console.log(">> EnDirect :", props.EnDirect);
-        console.log(">> ClubId :", props.ClubId);
-        console.log(">> CompetitionId :", props.CompetitionId);
-        console.log(">> ChannelId :", props.ChannelId);
-        console.log(">> date :", props.date);
-        console.log(">> Favoris :", props.Favoris);
+        Log(`>> search : ${props.search}`);
+        Log(`>> CeSoir : ${props.CeSoir}`);
+        Log(`>> EnCour : ${props.EnCour}`);
+        Log(`>> EnDirect : ${props.EnDirect}`);
+        Log(`>> ClubId : ${props.ClubId}`);
+        Log(`>> CompetitionId : ${props.CompetitionId}`);
+        Log(`>> ChannelId : ${props.ChannelId}`);
+        Log(`>> date : ${props.date}`);
+        Log(`>> Favoris : ${props.Favoris}`);
         if (!response.ok) {
             console.warn("Erreur HTTP :", response.status);
             return { res: [], pub: undefined };
@@ -61,8 +63,8 @@ async function GetResult(
         if (data?.Favoris && typeof data.Favoris === 'string') {
             data.Favoris = JSON.parse(data.Favoris);
         }
-        console.log(">> response :", data.data);
-        console.log(">> response :", data.test);
+        Log(">> response :"+ data.data);
+        Log(">> response :"+ data.test);
 
         return { res: data.emissions as ItemList[], pub: data.pub_page };
 

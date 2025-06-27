@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ThemeContext } from "../../context/ThemeContext";
 import { AppConfig } from "../../AppConfig";
 import { NotificationsType } from "../../utils/NotificationsType";
+import Log from "../../functions/Log";
 
 function formatReminderLabel(key: string, value: string) {
   switch (key) {
@@ -28,29 +29,29 @@ function formatReminderLabel(key: string, value: string) {
 function calculateTimeRemaining(dateStr: string, timeStr: string) {
   // Convertir la date format "09/12/2006" et l'heure format "23h45"
   const [day, month, year] = dateStr.split('/').map(Number);
-  
+
   // Parser l'heure au format "23h45"
   const timeMatch = timeStr.match(/(\d{1,2})h(\d{2})/);
   if (!timeMatch) {
     return { expired: true, text: "Format invalide" };
   }
-  
+
   const hours = parseInt(timeMatch[1], 10);
   const minutes = parseInt(timeMatch[2], 10);
-  
+
   const matchDate = new Date(year, month - 1, day, hours, minutes);
   const now = new Date();
-  
+
   const timeDiff = matchDate.getTime() - now.getTime();
-  
+
   if (timeDiff <= 0) {
     return { expired: true, text: "Match commencé" };
   }
-  
+
   const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
   const hoursRemaining = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutesRemaining = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-  
+
   if (days > 0) {
     return { expired: false, text: `Dans ${days}j ${hoursRemaining}h` };
   } else if (hoursRemaining > 0) {
@@ -79,12 +80,12 @@ function ItemNotifications({ item, OnPress }: Props) {
 
   const handleDelete = async () => {
     try {
-      console.log(`${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=delete&id=${profil_id}&emission=${item.id}`)
+      Log(`${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=delete&id=${profil_id}&emission=${item.id}`)
       const response = await fetch(
         `${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=delete&id=${profil_id}&emission=${item.id}`,
       );
       const data = await response.json();
-      console.log(data);
+      Log(data);
     } catch (error) {
       console.error(error);
     }
@@ -173,8 +174,8 @@ function ItemNotifications({ item, OnPress }: Props) {
                     ? "rgba(239, 68, 68, 0.15)"
                     : "rgba(239, 68, 68, 0.1)"
                   : darkMode
-                  ? "rgba(16, 185, 129, 0.15)"
-                  : "rgba(16, 185, 129, 0.1)",
+                    ? "rgba(16, 185, 129, 0.15)"
+                    : "rgba(16, 185, 129, 0.1)",
               },
             ]}
           >

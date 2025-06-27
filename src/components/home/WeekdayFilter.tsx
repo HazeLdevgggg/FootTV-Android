@@ -12,7 +12,7 @@ import DateToUI from "../../functions/DateToUI";
 import Icon from "@expo/vector-icons/FontAwesome";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Platform } from "react-native";
+import { Platform, Modal } from "react-native";
 interface WeekdayFilterProps {
   onFilterChange: (selectedDays: string[]) => void;
 }
@@ -84,28 +84,66 @@ function WeekdayFilter({ onFilterChange }: WeekdayFilterProps) {
   return (
     <>
     {showPicker && (
-      <DateTimePicker
-        value={new Date()}
-        mode="date"
-        display={"default"}
-        themeVariant={darkMode ? "dark" : "light"}
-        locale="fr-FR"
-        onChange={(event, date) => {
-          if (event.type === "dismissed") {
-            setShowPicker(false);
-            setMore(false);
-            setDateMore("");
-            clearAll();
-            return;
-          }
-          if (event.type === "set" && date) {
-            setShowPicker(false);
-            setMore(true);  
-            toggleDay(DateToString(date));
-            setDateMore(DateToString(date));
-          }
-        }}
-      />
+      <>
+        {Platform.OS === 'ios' ? (
+        <Modal
+          transparent
+          animationType="slide"
+          visible={showPicker}
+          onRequestClose={() => setShowPicker(false)}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.pickerContainer}>
+              <DateTimePicker
+                value={new Date()}
+                mode="date"
+                display="spinner"
+                themeVariant={darkMode ? "dark" : "light"}
+                locale="fr-FR"
+                onChange={(event, date) => {
+                  if (event.type === "dismissed") {
+                    setShowPicker(false);
+                    setMore(false);
+                    setDateMore("");
+                    clearAll();
+                    return;
+                  }
+                  if (event.type === "set" && date) {
+                    setShowPicker(false);
+                    setMore(true);
+                    toggleDay(DateToString(date));
+                    setDateMore(DateToString(date));
+                  }
+                }}
+              />
+            </View>
+          </View>
+        </Modal>
+      ) : (
+        <DateTimePicker
+            value={new Date()}
+            mode="date"
+            display="default"
+            themeVariant={darkMode ? "dark" : "light"}
+            locale="fr-FR"
+            onChange={(event, date) => {
+              if (event.type === "dismissed") {
+                setShowPicker(false);
+                setMore(false);
+                setDateMore("");
+                clearAll();
+                return;
+              }
+              if (event.type === "set" && date) {
+                setShowPicker(false);
+                setMore(true);
+                toggleDay(DateToString(date));
+                setDateMore(DateToString(date));
+              }
+            }}
+          />
+      )}
+      </>
     )}
     <View style={styles.container}>
       {/* Header avec actions */}
@@ -295,6 +333,17 @@ const styles = StyleSheet.create({
   dayShort: {
     fontSize: 20,
     marginBottom: 2,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  pickerContainer: {
+    paddingTop: 20,
+    paddingBottom: 40,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
 
   dayFull: {

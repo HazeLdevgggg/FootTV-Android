@@ -13,7 +13,6 @@ function createOnPress() {
     return (event: any, href: string) => {
       href = href.replace(/\//g, '');
       href = href.replace('about:', '');
-      //console.log(`You just pressed ${href}, coming from ${route}`);
       var id = Number(href);
       var site = "0";
       navigation.push("Article", {id : id.toString()})

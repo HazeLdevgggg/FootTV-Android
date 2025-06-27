@@ -16,15 +16,17 @@ import { useTypedNavigation } from "../navigation/navigation";
 import ScreenHeader from "../components/layout/ScreenHeader/ScreenHeader";
 import Loading from "../components/layout/Loading";
 import { routes } from "../routes/routes";
+import Log from "../functions/Log"
 function LegalMention() {
   const { darkMode } = useContext(ThemeContext);
   const { width } = useWindowDimensions();
   const [loading, setLoading] = useState(true);
   const [legalMention, setLegalMention] = useState(null);
+
   const navigation = useTypedNavigation();
   useEffect(() => {
     const getChannel = async () => {
-      console.log(`${AppConfig.API_BASE_URL}${routes.LegalMention}?apikey=${AppConfig.API_Key}`);
+      Log(`${AppConfig.API_BASE_URL}${routes.LegalMention}?apikey=${AppConfig.API_Key}`);
       try {
         const response = await fetch(
           `${AppConfig.API_BASE_URL}${routes.LegalMention}?apikey=${AppConfig.API_Key}`,

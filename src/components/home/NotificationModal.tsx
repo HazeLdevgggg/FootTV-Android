@@ -27,6 +27,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 import NotificationTime from "../layout/NotificationTIme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useInterstitial } from "../../hooks/Pub";
+import Log from "../../functions/Log";
   type Props = {
   item: ItemList;
   isVisible: boolean;
@@ -58,7 +59,7 @@ const NotificationModal = ({ item, isVisible, onClose }: Props) => {
           const response = await fetch(
             `${AppConfig.API_BASE_URL}${routes.Description}?apikey=${AppConfig.API_Key}&id=${item.id}`,
           );
-          console.log(`${AppConfig.API_BASE_URL}${routes.Description}?apikey=${AppConfig.API_Key}&id=${item.id}`);
+          Log(`${AppConfig.API_BASE_URL}${routes.Description}?apikey=${AppConfig.API_Key}&id=${item.id}`);
           const data = await response.json();
           setDescription(data.description);
           setLoadingDescription(false);
@@ -115,30 +116,20 @@ const NotificationModal = ({ item, isVisible, onClose }: Props) => {
         <NotificationTime onValidate={(minute: number, heure: number, jour: number) => {
           setNotificationTimeModal(false);
           onClose();
-          console.log("heure"+heure,"minutes"+minute,"jours"+jour)
+          Log("heure"+heure+"minutes"+minute+"jours"+jour)
           const getNotifications = async () => {
             try {
-              console.log(`${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=insert&id=${profil_id}&minute=${minute}&heure=${heure}&jour=${jour}&emission=${item.id}`)
+              Log(`${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=insert&id=${profil_id}&minute=${minute}&heure=${heure}&jour=${jour}&emission=${item.id}`)
               const response = await fetch(
                 `${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=insert&id=${profil_id}&minute=${minute}&heure=${heure}&jour=${jour}&emission=${item.id}`,
               );
               const data = await response.json();
-              console.log(data);
+              Log(data);
             } catch (error) {
               console.error(error);
             }
           };
           getNotifications();
-          if (heure > 0 || minute > 0 || jour > 0) {
-            Toast.show({
-              type: 'success',
-              text1: 'Validé',
-              text2: 'La notification a bien été enregistrée',
-              position: 'top',
-              topOffset: 60,
-              visibilityTime: 2000,
-            });
-          }
           showInterstitial();
         }} matchID={item.id} date={item.date} heure={item.heure} name="Notification" icon="notifications" />
       </>

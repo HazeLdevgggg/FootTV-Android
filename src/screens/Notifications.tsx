@@ -8,6 +8,7 @@ import ScreenHeader from "../components/layout/ScreenHeader/ScreenHeader";
 import Empty from "../components/layout/Empty";
 import { NotificationsType } from "../utils/NotificationsType";
 import { useTypedNavigation } from "../navigation/navigation";
+import Log from "../functions/Log"
 
 function Notifications() {
   const navigation = useTypedNavigation();
@@ -18,11 +19,11 @@ function Notifications() {
     const getNotifications = async () => {
       try {
         const url = `${AppConfig.API_BASE_URL}init/emission.php?apikey=2921182712&mode=list&id=${profil_id}&rand=${Math.random()}`;
-        console.log(url);
+        Log(url);
         const response = await fetch(url);
         const data = await response.json();
         setNotifications(data.liste);
-        console.log(data);
+        Log(data);
       } catch (error) {
         console.error(error);
       }

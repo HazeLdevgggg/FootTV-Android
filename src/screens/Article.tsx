@@ -30,6 +30,8 @@ import ScreenHeader from "../components/layout/ScreenHeader/ScreenHeader";
 import Loading from "../components/layout/Loading";
 import DisplayNews from "../components/news/DisplayNews";
 import { routes } from "../routes/routes";
+import Log from "../functions/Log"
+
 function Article() {
   const route = useRoute<RouteProp<StackScreens, "ChannelProgram">>();
   const { id } = route.params;
@@ -48,14 +50,14 @@ function Article() {
   useEffect(() => {
     const getChannel = async () => {
       setLoading(true);
-      console.log(`${AppConfig.API_BASE_URL}${routes.Article}?apikey=${AppConfig.API_Key}&id=${id}`);
+      Log(`${AppConfig.API_BASE_URL}${routes.Article}?apikey=${AppConfig.API_Key}&id=${id}`);
       try {
         const response = await fetch(
           `${AppConfig.API_BASE_URL}${routes.Article}?apikey=${AppConfig.API_Key}&id=${id}`,
         );
-        console.log(`${AppConfig.API_BASE_URL}${routes.Article}?apikey=${AppConfig.API_Key}&id=${id}`);
+        Log(`${AppConfig.API_BASE_URL}${routes.Article}?apikey=${AppConfig.API_Key}&id=${id}`);
         const data = await response.json();
-        console.log(data);
+        Log(data);
         setArticle(data);
         setArticlePopular(data.populaires.liste ?? []);
         setPubPage(data.pub_page);

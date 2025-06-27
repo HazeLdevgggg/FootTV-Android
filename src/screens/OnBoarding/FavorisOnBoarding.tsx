@@ -12,6 +12,8 @@ import ScreenHeader from "../../components/layout/ScreenHeader/ScreenHeader";
 import Empty from "../../components/layout/Empty";
 import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Log from "../../functions/Log"
+
 
 type FavorisProps = {
     id: string,
@@ -106,7 +108,7 @@ function FavorisOnBoarding() {
                             };
                             const updated = [...favoris, newCategory];
                             setFavoris(updated);
-                            console.log("Favoris added:", newCategory);
+                            Log("Favoris added:"+ newCategory);
                         }} />
                     </View>
                 </ScrollView>

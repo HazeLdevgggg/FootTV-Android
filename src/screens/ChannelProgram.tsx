@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import type { ChannelProgramType } from "../utils/ChannelProgramType";
+import Log from "../functions/Log"
 import {
   Text,
   View,
@@ -46,7 +47,7 @@ function ChannelProgram() {
 
   const DateToStringUI = (date: string) => {
     if (!date) return "";
-    console.log(date)
+    Log(date)
     const dateSplit = date.split("-");
     if (dateSplit.length !== 3) return "";
     return `${dateSplit[2]}/${dateSplit[1]}/${dateSplit[0]}`;
@@ -56,7 +57,7 @@ function ChannelProgram() {
     const getChannel = async () => {
       setLoading(true);
       try {
-        console.log(
+        Log(
           `${AppConfig.API_BASE_URL}${routes.ChannelProgram}?apikey=${AppConfig.API_Key}&mode=${mode}&id=${id}`,
         );
         const response = await fetch(
@@ -92,7 +93,7 @@ function ChannelProgram() {
         <FiltersChannel
           Value={selectedDate}
           onFilterChange={(newDate) => {
-            console.log("Filtre appliqué :", newDate);
+            Log("Filtre appliqué :"+ newDate);
             if (!newDate) {
               setIsFilterApplied(false);
               setSelectedDate("");
